@@ -4,6 +4,9 @@ import mongoose from "mongoose"
 import cors from "cors"
 import dotenv from "dotenv"
 import path from "path"
+import workoutRoutes from "./routes/workouts.js"
+import Workout from "./models/Workout.js"
+
 
 const app = express()
 dotenv.config()
@@ -19,3 +22,6 @@ mongoose.connect(process.env.URL, {
 }).then (() => {
     app.listen(PORT, () => console.log("Server connected"))
 }).catch((error) => console.log`${error} NO connection`)
+
+// Routes
+app.use("/workout", workoutRoutes)
