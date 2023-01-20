@@ -5,7 +5,6 @@ import cors from "cors"
 import dotenv from "dotenv"
 import path from "path"
 import workoutRoutes from "./routes/workouts.js"
-import Workout from "./models/Workout.js"
 
 
 const app = express()

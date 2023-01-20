@@ -8,7 +8,8 @@ const reqString = {
 const WorkoutSchema = new mongoose.Schema(
     {
         workout_name: reqString,
-        date: Date,
+        workout_type: reqString,
+        date: reqString,
         exercises: {
             type: Array,
             default: []
