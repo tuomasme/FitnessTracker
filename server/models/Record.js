@@ -1,10 +1,5 @@
 import mongoose from "mongoose"
 
-const reqString = {
-    type: String,
-    required: true
-}
-
 const RecordSchema = new mongoose.Schema(
     {
         exercise_name: {

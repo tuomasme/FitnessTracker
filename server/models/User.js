@@ -2,13 +2,26 @@ import mongoose from "mongoose"
 import Workout from "./Workout.js"
 import Record from "./Record.js"
 
+const reqString = {
+    type: String,
+    required: true
+}
+
 const UserSchema = new mongoose.Schema(    
     {
+        firstName: reqString,
+        lastName: reqString,
+        email: {
+            type: String,
+            require: true,
+            unique: true
+        },
         username: {
             type: String,
             require: true,
             min: 6,
-            max: 30
+            max: 30,
+            unique: true
         },
         password: {
             type: String,
@@ -16,8 +29,8 @@ const UserSchema = new mongoose.Schema(
             min: 8,
             max: 16
         },
-        workouts: [Workout],
-        records: [Record]
+        workouts: [Workout.schema],
+        records: [Record.schema]
     }
 )
 

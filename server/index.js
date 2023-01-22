@@ -3,11 +3,10 @@ import bodyParser from "body-parser"
 import mongoose from "mongoose"
 import cors from "cors"
 import dotenv from "dotenv"
-import path from "path"
 import helmet from "helmet"
 import morgan from "morgan"
 import workoutRoutes from "./routes/workouts.js"
-
+import authorizationRoutes from "./routes/authorization.js"
 
 // Configurations
 const app = express()
@@ -20,6 +19,7 @@ app.use(bodyParser.json({limit: "30mb", extended: true}))
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true}))
 app.use(cors())
 
+// Mongoose setup
 const PORT = process.env.PORT || 5500
 mongoose.connect(process.env.URL, {
     useNewUrlParser: true,
@@ -30,3 +30,4 @@ mongoose.connect(process.env.URL, {
 
 // Routes
 app.use("/workout", workoutRoutes)
+app.use("/authorization", authorizationRoutes)
