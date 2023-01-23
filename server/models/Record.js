@@ -2,11 +2,14 @@ import mongoose from "mongoose"
 
 const RecordSchema = new mongoose.Schema(
     {
-        exercise_name: {
+        recordName: {
             type: String,
             required: true
         },
-        exercise_weight: Number
+        recordWeight: {
+            type: Number,
+            required: true
+        }
     }
 )
 

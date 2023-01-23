@@ -1,4 +1,4 @@
-import NavBar from "../navbar"
+
 
 const LoginPage = () => {
     return (
@@ -6,4 +6,4 @@ const LoginPage = () => {
     )
   }
   
-  export default LoginPage
+export default LoginPage

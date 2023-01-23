@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import LoginPage from './pages/loginPage'
-import WorkoutsPage from './pages/workoutPage'
+import WorkoutsPage from './pages/workoutsPage'
 import RecordsPage from './pages/recordsPage'
 
 const App = () => {

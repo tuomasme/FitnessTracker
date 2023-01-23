@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import Exercise from "./Exercise.js"
 
 const reqString = {
     type: String,
@@ -7,13 +8,10 @@ const reqString = {
 
 const WorkoutSchema = new mongoose.Schema(
     {
-        workout_name: reqString,
-        workout_type: reqString,
+        workoutName: reqString,
+        workoutType: reqString,
         date: reqString,
-        exercises: {
-            type: Array,
-            default: []
-        }
+        exercises: [Exercise.schema]
     }
 )
 
