@@ -20,14 +20,14 @@ const UserSchema = new mongoose.Schema(
             type: String,
             require: true,
             min: 6,
-            max: 30,
+            max: 16,
             unique: true
         },
         password: {
             type: String,
             require: true,
             min: 8,
-            max: 16
+            max: 50
         },
         workouts: [Workout.schema],
         records: [Record.schema]
