@@ -2,11 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setLogin } from "../../state/index.js"
 
 const Login = () => {
 	const [data, setData] = useState({ username: "", password: "" })
 	const [error, setError] = useState("")
     const navigate = useNavigate()
+	const dispatch = useDispatch()
 
 	const handleChange = ({ currentTarget: input }) => {
 		setData({ ...data, [input.name]: input.value })
@@ -15,10 +18,17 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		try {
-			const url = "http://localhost:5000/authorization/register"
-			const {data: res} = await axios.post(url, data)
-			console.log(res.message);
-			navigate("/workouts")
+			const url = "http://localhost:5000/authorization/login"
+			const res = await axios.post(url, data)
+			if (res) {
+				dispatch(
+					setLogin({
+					user: res.data.user,
+					token: res.data.token,
+				})
+      );
+      navigate("/workouts");
+    }
 		} catch (error) {
 			if (
 				error.response &&
