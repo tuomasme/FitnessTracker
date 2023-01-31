@@ -41,36 +41,54 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="h-100">
       <div>
         <div>
-          <form onSubmit={handleSubmit}>
-            <h1>Login</h1>
-            <input
-              type="text"
-              placeholder="Username"
-              name="username"
-              onChange={handleChange}
-              value={data.username}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={handleChange}
-              value={data.password}
-              required
-            />
-            {error && <div>{error}</div>}
-            <button type="submit">Login</button>
-          </form>
+          <h1 className="d-flex justify-content-center">Login</h1>
         </div>
         <div>
-          <Link to="/register">
-            <div type="button">Don't have an account? Sign Up here.</div>
-          </Link>
+          <form onSubmit={handleSubmit}>
+            <div className="d-flex justify-content-center">
+              <input
+                className="form-control form-outline w-25"
+                type="text"
+                placeholder="Username"
+                name="username"
+                onChange={handleChange}
+                value={data.username}
+                required
+              />
+            </div>
+            <div className="d-flex justify-content-center">
+              <input
+                className="form-control form-outline w-25"
+                type="password"
+                placeholder="Password"
+                name="password"
+                onChange={handleChange}
+                value={data.password}
+                required
+              />
+            </div>
+            {error && (
+              <div className="d-flex justify-content-center">{error}</div>
+            )}
+            <div className="d-flex justify-content-center">
+              <button
+                className="form-control form-outline w-25 btn btn-primary"
+                type="submit"
+              >
+                Login
+              </button>
+            </div>
+          </form>
         </div>
+      </div>
+      <br />
+      <div className="d-flex justify-content-center">
+        <Link to="/register">
+          <div type="button">Don't have an account? Sign Up here.</div>
+        </Link>
       </div>
     </div>
   );
