@@ -32,5 +32,5 @@ mongoose
   .catch((error) => console.log`${error} NO connection`);
 
 // Routes
-app.use("/workout", workoutRoutes);
+app.use("/workouts", workoutRoutes);
 app.use("/authorization", authorizationRoutes);

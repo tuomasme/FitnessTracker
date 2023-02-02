@@ -1,3 +1,4 @@
+import User from "../models/User.js";
 import Workout from "../models/Workout.js";
 
 export const getWorkouts = async (req, res) => {
@@ -9,13 +10,27 @@ export const getWorkouts = async (req, res) => {
   }
 };
 
+export const getUserWorkouts = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const workouts = await Workout.find({ userId });
+    res.status(200).json(workouts);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const addWorkout = async (req, res) => {
   try {
+    const { userId, workoutName, workoutType, workoutDate, workoutExercises } =
+      req.body;
+    const user = await User.findById(userId);
     const newWorkout = new Workout({
-      workout_name: req.body.workout_name,
-      workout_type: req.body.workout_type,
-      date: req.body.date,
-      exercises: [],
+      userId,
+      workoutName,
+      workoutType,
+      workoutDate,
+      workoutExercises,
     });
     await newWorkout.save();
     res.status(201).json(newWorkout);
@@ -27,7 +42,7 @@ export const addWorkout = async (req, res) => {
 export const deleteWorkout = async (req, res) => {
   try {
     const deleteWorkout = await Workout.findByIdAndDelete(req.params.id);
-    res.status(200).json("Post deleted");
+    res.status(200).json("Workout deleted");
   } catch (error) {
     res.json(400).json({ message: err.message });
   }
@@ -38,7 +53,7 @@ export const editWorkout = async (req, res) => {
     const editWorkout = await Workout.findByIdAndUpdate(req.params.id, {
       $set: req.body,
     });
-    res.status(200).json("Post updated");
+    res.status(200).json("Workout updated");
   } catch (error) {
     res.json(404).json({ message: err.message });
   }

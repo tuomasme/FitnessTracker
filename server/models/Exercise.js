@@ -6,6 +6,10 @@ const reqNumber = {
 };
 
 const ExerciseSchema = new mongoose.Schema({
+  workoutId: {
+    type: String,
+    required: true,
+  },
   exerciseName: {
     type: String,
     required: true,

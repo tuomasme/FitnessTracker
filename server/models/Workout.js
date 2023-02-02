@@ -7,10 +7,11 @@ const reqString = {
 };
 
 const WorkoutSchema = new mongoose.Schema({
+  userId: reqString,
   workoutName: reqString,
   workoutType: reqString,
-  date: reqString,
-  exercises: [Exercise.schema],
+  workoutDate: reqString,
+  workoutExercises: [Exercise.schema],
 });
 
 const Workout = mongoose.model("Workout", WorkoutSchema);
