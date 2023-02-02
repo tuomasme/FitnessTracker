@@ -4,8 +4,8 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import WorkoutsPage from "./pages/workoutsPage";
-import RecordsPage from "./pages/recordsPage";
+import WorkoutsPage from "./pages/workouts";
+import RecordsPage from "./pages/records";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import { useSelector } from "react-redux";

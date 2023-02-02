@@ -33,6 +33,7 @@ export const addWorkout = async (req, res) => {
       workoutExercises,
     });
     await newWorkout.save();
+    const workouts = await Workout.find();
     res.status(201).json(newWorkout);
   } catch (err) {
     res.status(409).json({ message: err.message });
