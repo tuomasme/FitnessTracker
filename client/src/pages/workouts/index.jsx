@@ -18,7 +18,7 @@ const WorkoutsPage = () => {
     workoutDate: "",
     workoutExercises: [],
   });
-  const [workoutList, setWorkoutList] = useState([]);
+  const [workoutsList, setWorkoutsList] = useState([]);
 
   const getWorkouts = async () => {
     try {
@@ -33,7 +33,7 @@ const WorkoutsPage = () => {
           workouts: res.data,
         })
       );
-      setWorkoutList(res.data);
+      setWorkoutsList(res.data);
       console.log("res: ", res.data);
       console.log("Workouts: ", workouts);
     } catch (error) {
@@ -72,9 +72,27 @@ const WorkoutsPage = () => {
           workouts: Array.from(res.data),
         })
       );
-      setWorkoutList(Array.from(res.data));
-      console.log("After post: ", workoutList);
+      setWorkoutsList(Array.from(res.data));
+      console.log("After post: ", workoutsList);
       getWorkouts();
+    } catch (error) {
+      setError(error.res.data.message);
+      console.log(error);
+    }
+  };
+
+  const deleteWorkout = async (id) => {
+    try {
+      let res = await axios.delete(
+        `http://localhost:5000/workouts/${_id}/workouts/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const newWorkoutsList = workoutsList.filter(
+        (workout) => workout._id !== id
+      );
+      setWorkoutsList(newWorkoutsList);
     } catch (error) {
       setError(error.res.data.message);
       console.log(error);
@@ -135,18 +153,31 @@ const WorkoutsPage = () => {
         </form>
       </div>
       <div>
-        {workoutList.map((workout) => (
+        {workoutsList.map((workout) => (
           <table key={workout._id} className="d-flex justify-content-center">
             <tbody>
               <tr>
-                <td style={{ fontSize: "24px", padding: "10px 10px" }}>
+                <td
+                  style={{
+                    fontSize: "24px",
+                    padding: "10px 10px",
+                    width: "150px",
+                  }}
+                >
                   {workout.workoutName}
                 </td>
                 <td>
                   <button className="btn btn-warning btn-sm">Update</button>
                 </td>
                 <td>
-                  <button className="btn btn-danger btn-sm">Delete</button>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => {
+                      deleteWorkout(workout._id);
+                    }}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             </tbody>

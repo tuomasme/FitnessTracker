@@ -20,7 +20,7 @@ router.get("/:userId/workouts", verifyToken, getUserWorkouts);
 router.post("/:userId/workouts", verifyToken, addWorkout);
 
 // Delete a workout
-router.delete("/:id", verifyToken, deleteWorkout);
+router.delete("/:userId/workouts/:id", verifyToken, deleteWorkout);
 
 // Edit a workout
 router.patch("/:id", verifyToken, editWorkout);
