@@ -5,7 +5,7 @@ const NavBar = () => {
     <Container>
       <Nav
         className="me-auto d-flex justify-content-center"
-        style={{ fontSize: "20px" }}
+        style={{ fontSize: "28px" }}
       >
         <Nav.Link href="/workouts">Workouts</Nav.Link>
         <Nav.Link href="/records">Records</Nav.Link>
