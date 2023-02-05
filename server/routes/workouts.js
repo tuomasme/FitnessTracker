@@ -11,18 +11,18 @@ import { verifyToken } from "../middleware/authorization.js";
 const router = express.Router();
 
 // Fetch all workouts
-router.get("/workouts", verifyToken, getWorkouts);
+router.get("/", verifyToken, getWorkouts);
 
 // Fetch workouts of one user
-router.get("/:userId/workouts", verifyToken, getUserWorkouts);
+router.get("/:userId/", verifyToken, getUserWorkouts);
 
 // Add a workout
-router.post("/:userId/workouts", verifyToken, addWorkout);
+router.post("/:userId/", verifyToken, addWorkout);
 
 // Delete a workout
-router.delete("/:userId/workouts/:id", verifyToken, deleteWorkout);
+router.delete("/:userId/:id", verifyToken, deleteWorkout);
 
 // Edit a workout
-router.patch("/:id", verifyToken, editWorkout);
+router.patch("/:userId/:id", verifyToken, editWorkout);
 
 export default router;

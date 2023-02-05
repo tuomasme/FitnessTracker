@@ -16,18 +16,18 @@ const WorkoutsPage = () => {
     workoutName: "",
     workoutType: "",
     workoutDate: "",
-    workoutExercises: [],
+    workoutExercises: [
+      ,/* { exerciseName: "", exerciseSets: 0, exerciseReps: 0, exerciseWeight: 0 } */
+    ],
   });
   const [workoutsList, setWorkoutsList] = useState([]);
+  const [val, setVal] = useState([]);
 
   const getWorkouts = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/workouts/${_id}/workouts`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await axios.get(`http://localhost:5000/workouts/${_id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       dispatch(
         setWorkouts({
           workouts: res.data,
@@ -57,11 +57,17 @@ const WorkoutsPage = () => {
     setData({ ...data, [input.name]: input.value });
   };
 
+  const handleExerciseInputChange = (onChangeValue, i) => {
+    const inputdata = [...val];
+    inputdata[i] = onChangeValue.target.value;
+    setData(...data, data.workoutExercises.exerciseName.push(inputdata));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       let res = await axios.post(
-        `http://localhost:5000/workouts/${_id}/workouts`,
+        `http://localhost:5000/workouts/${_id}/`,
         data,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -84,7 +90,7 @@ const WorkoutsPage = () => {
   const deleteWorkout = async (id) => {
     try {
       let res = await axios.delete(
-        `http://localhost:5000/workouts/${_id}/workouts/${id}`,
+        `http://localhost:5000/workouts/${_id}/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -93,10 +99,22 @@ const WorkoutsPage = () => {
         (workout) => workout._id !== id
       );
       setWorkoutsList(newWorkoutsList);
+      getWorkouts();
     } catch (error) {
       setError(error.res.data.message);
       console.log(error);
     }
+  };
+
+  const handleAdd = () => {
+    const abc = [...val, []];
+    setVal(abc);
+  };
+
+  const handleDelete = (i) => {
+    const deleteVal = [...val];
+    deleteVal.splice(i, 1);
+    setVal(deleteVal);
   };
 
   return (
@@ -139,12 +157,38 @@ const WorkoutsPage = () => {
               required
             />
           </div>
+          <div className="d-flex justify-content-center">
+            {/*             <button
+              className="form-control form-outline w-25 btn btn-primary"
+              onClick={() => handleAdd()}
+            >
+              Add exercise
+            </button> */}
+          </div>
+          <div>
+            <div>
+              {/* {val.map((data, i) => {
+                return (
+                  <div className="d-flex justify-content-center">
+                    <input
+                      className="form-control form-outline w-25"
+                      type="text"
+                      placeholder="Exercise"
+                      onChange={(e) => handleExerciseInputChange(e, i)}
+                      value={data.workoutExercises}
+                    />
+                    <button onClick={() => handleDelete(i)}>x</button>
+                  </div>
+                );
+              })} */}
+            </div>
+          </div>
           {error && (
             <div className="d-flex justify-content-center">{error}</div>
           )}
           <div className="d-flex justify-content-center">
             <button
-              className="form-control btn btn-primary form-outline w-25"
+              className="form-control btn btn-success form-outline w-25"
               type="submit"
             >
               Add workout
@@ -153,36 +197,37 @@ const WorkoutsPage = () => {
         </form>
       </div>
       <div>
-        {workoutsList.map((workout) => (
-          <table key={workout._id} className="d-flex justify-content-center">
-            <tbody>
-              <tr>
-                <td
-                  style={{
-                    fontSize: "24px",
-                    padding: "10px 10px",
-                    width: "150px",
-                  }}
-                >
-                  {workout.workoutName}
-                </td>
-                <td>
-                  <button className="btn btn-warning btn-sm">Update</button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => {
-                      deleteWorkout(workout._id);
+        {workoutsList &&
+          workoutsList.map((workout) => (
+            <table key={workout._id} className="d-flex justify-content-center">
+              <tbody>
+                <tr>
+                  <td
+                    style={{
+                      fontSize: "24px",
+                      padding: "10px 10px",
+                      width: "150px",
                     }}
                   >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        ))}
+                    {workout.workoutName}
+                  </td>
+                  <td>
+                    <button className="btn btn-warning btn-sm">Update</button>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => {
+                        deleteWorkout(workout._id);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          ))}
       </div>
     </div>
   );

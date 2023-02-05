@@ -7,6 +7,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import workoutRoutes from "./routes/workouts.js";
 import authorizationRoutes from "./routes/authorization.js";
+import recordRoutes from "./routes/records.js";
 
 // Configurations
 const app = express();
@@ -34,3 +35,4 @@ mongoose
 // Routes
 app.use("/workouts", workoutRoutes);
 app.use("/authorization", authorizationRoutes);
+app.use("/records", recordRoutes);
