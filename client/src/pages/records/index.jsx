@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setRecords } from "../../state/index.js";
+import { setRecord, setRecords } from "../../state/index.js";
 
 const RecordsPage = () => {
   const [error, setError] = useState("");
@@ -91,6 +91,18 @@ const RecordsPage = () => {
     }
   };
 
+  const updateRecord = async (id) => {
+    let res = await axios.patch(`http://localhost:5000/records/${_id}/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    dispatch(
+      setRecord({
+        record: res.data,
+      })
+    );
+    getRecords();
+  };
+
   return (
     <div>
       <h1 className="d-flex justify-content-center">Records</h1>
@@ -158,7 +170,14 @@ const RecordsPage = () => {
                     {record.recordWeight} {weightUnit}
                   </td>
                   <td>
-                    <button className="btn btn-warning btn-sm">Update</button>
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => {
+                        updateRecord(record._id);
+                      }}
+                    >
+                      Update
+                    </button>
                   </td>
                   <td>
                     <button

@@ -158,16 +158,16 @@ const WorkoutsPage = () => {
             />
           </div>
           <div className="d-flex justify-content-center">
-            {/*             <button
+            <button
               className="form-control form-outline w-25 btn btn-primary"
               onClick={() => handleAdd()}
             >
               Add exercise
-            </button> */}
+            </button>
           </div>
           <div>
             <div>
-              {/* {val.map((data, i) => {
+              {val.map((data, i) => {
                 return (
                   <div className="d-flex justify-content-center">
                     <input
@@ -180,7 +180,7 @@ const WorkoutsPage = () => {
                     <button onClick={() => handleDelete(i)}>x</button>
                   </div>
                 );
-              })} */}
+              })}
             </div>
           </div>
           {error && (
