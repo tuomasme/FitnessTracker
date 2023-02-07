@@ -11,17 +11,26 @@ const WorkoutsPage = () => {
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const workouts = useSelector((state) => state.user.workouts);
-  const [data, setData] = useState({
+
+  const [exerciseData, setExerciseData] = useState([
+    {
+      userId: _id,
+      exerciseName: "",
+      exerciseSets: "",
+      exerciseReps: "",
+      exerciseWeight: "",
+    },
+  ]);
+
+  const [workoutData, setWorkoutData] = useState({
     userId: _id,
     workoutName: "",
     workoutType: "",
     workoutDate: "",
-    workoutExercises: [
-      ,/* { exerciseName: "", exerciseSets: 0, exerciseReps: 0, exerciseWeight: 0 } */
-    ],
+    workoutExercises: [],
   });
+
   const [workoutsList, setWorkoutsList] = useState([]);
-  const [val, setVal] = useState([]);
 
   const getWorkouts = async () => {
     try {
@@ -54,13 +63,13 @@ const WorkoutsPage = () => {
   }, [workouts]); */
 
   const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value });
+    setWorkoutData({ ...workoutData, [input.name]: input.value });
   };
 
-  const handleExerciseInputChange = (onChangeValue, i) => {
-    const inputdata = [...val];
-    inputdata[i] = onChangeValue.target.value;
-    setData(...data, data.workoutExercises.exerciseName.push(inputdata));
+  const handleExerciseFormChange = (event, index) => {
+    let exerciseFormData = [...exerciseData];
+    exerciseFormData[index][event.target.name] = event.target.value;
+    setExerciseData(exerciseFormData);
   };
 
   const handleSubmit = async (e) => {
@@ -68,7 +77,7 @@ const WorkoutsPage = () => {
     try {
       let res = await axios.post(
         `http://localhost:5000/workouts/${_id}/`,
-        data,
+        workoutData,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -106,15 +115,26 @@ const WorkoutsPage = () => {
     }
   };
 
-  const handleAdd = () => {
-    const abc = [...val, []];
-    setVal(abc);
+  const addExerciseFields = (event) => {
+    event.preventDefault();
+    let exerciseObject = {
+      userId: _id,
+      exerciseName: "",
+      exerciseSets: 0,
+      exerciseReps: 0,
+      exerciseWeight: 0,
+    };
+    setExerciseData([...exerciseData, exerciseObject]);
   };
 
-  const handleDelete = (i) => {
-    const deleteVal = [...val];
-    deleteVal.splice(i, 1);
-    setVal(deleteVal);
+  const deleteExerciseFields = (event, index) => {
+    let exerciseFormData = [...exerciseData];
+    exerciseFormData.splice(index, 1);
+    setExerciseData(exerciseFormData);
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
   };
 
   return (
@@ -123,7 +143,7 @@ const WorkoutsPage = () => {
       <NavBar />
 
       <div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={submitHandler}>
           <div className="d-flex justify-content-center">
             <input
               className="form-control form-outline w-25"
@@ -131,7 +151,7 @@ const WorkoutsPage = () => {
               placeholder="Workout name"
               name="workoutName"
               onChange={handleChange}
-              value={data.workoutName}
+              value={workoutData.workoutName}
               required
             />
           </div>
@@ -142,7 +162,7 @@ const WorkoutsPage = () => {
               placeholder="Workout type"
               name="workoutType"
               onChange={handleChange}
-              value={data.workoutType}
+              value={workoutData.workoutType}
               required
             />
           </div>
@@ -153,36 +173,87 @@ const WorkoutsPage = () => {
               placeholder="Workout date"
               name="workoutDate"
               onChange={handleChange}
-              value={data.workoutDate}
+              value={workoutData.workoutDate}
               required
             />
           </div>
-          <div className="d-flex justify-content-center">
-            <button
-              className="form-control form-outline w-25 btn btn-primary"
-              onClick={() => handleAdd()}
-            >
-              Add exercise
-            </button>
-          </div>
           <div>
+            <br />
             <div>
-              {val.map((data, i) => {
+              {Array.from(exerciseData).map((exerciseField, index) => {
                 return (
-                  <div className="d-flex justify-content-center">
-                    <input
-                      className="form-control form-outline w-25"
-                      type="text"
-                      placeholder="Exercise"
-                      onChange={(e) => handleExerciseInputChange(e, i)}
-                      value={data.workoutExercises}
-                    />
-                    <button onClick={() => handleDelete(i)}>x</button>
+                  <div key={index}>
+                    <div className="d-flex justify-content-center">
+                      <input
+                        className="form-control form-outline w-25"
+                        type="text"
+                        placeholder="Exercise name"
+                        name="exerciseName"
+                        onChange={(event) =>
+                          handleExerciseFormChange(event, index)
+                        }
+                        value={exerciseField.exerciseName}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-center">
+                      <input
+                        className="form-control form-outline w-25"
+                        type="text"
+                        placeholder="Exercise weight"
+                        name="exerciseWeight"
+                        onChange={(event) =>
+                          handleExerciseFormChange(event, index)
+                        }
+                        value={exerciseField.exerciseWeight}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-center">
+                      <input
+                        className="form-control form-outline w-25"
+                        type="text"
+                        placeholder="Exercise sets"
+                        name="exerciseSets"
+                        onChange={(event) =>
+                          handleExerciseFormChange(event, index)
+                        }
+                        value={exerciseField.exerciseSets}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-center">
+                      <input
+                        className="form-control form-outline w-25"
+                        type="text"
+                        placeholder="Exercise reps"
+                        name="exerciseReps"
+                        onChange={(event) =>
+                          handleExerciseFormChange(event, index)
+                        }
+                        value={exerciseField.exerciseReps}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-center">
+                      <button
+                        className="form-control form-outline w-25 btn btn-danger"
+                        onClick={() => deleteExerciseFields(index)}
+                      >
+                        x
+                      </button>
+                    </div>
                   </div>
                 );
               })}
             </div>
           </div>
+          <br />
+          <div className="d-flex justify-content-center">
+            <button
+              className="form-control form-outline w-25 btn btn-primary"
+              onClick={addExerciseFields}
+            >
+              Add exercise
+            </button>
+          </div>
+          <br />
           {error && (
             <div className="d-flex justify-content-center">{error}</div>
           )}
@@ -190,12 +261,14 @@ const WorkoutsPage = () => {
             <button
               className="form-control btn btn-success form-outline w-25"
               type="submit"
+              onClick={handleSubmit}
             >
               Add workout
             </button>
           </div>
         </form>
       </div>
+      <br />
       <div>
         {workoutsList &&
           workoutsList.map((workout) => (
