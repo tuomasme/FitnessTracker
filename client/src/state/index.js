@@ -21,10 +21,14 @@ export const authorizationSlice = createSlice({
       state.token = null;
     },
     setWorkouts: (state, action) => {
-      state.user.workouts = action.payload.workouts;
+      if (state.user) {
+        state.user.workouts = action.payload.workouts;
+      } else {
+        console.error("User workouts don't exist");
+      }
     },
     setWorkout: (state, action) => {
-      const updatedWorkout = state.workouts((workout) => {
+      const updatedWorkout = state.user.workouts.map((workout) => {
         if (workout._id === action.payload.workout._id)
           return action.payload.workout;
         return workout;
@@ -32,26 +36,34 @@ export const authorizationSlice = createSlice({
       state.user.workouts = updatedWorkout;
     },
     setRecords: (state, action) => {
-      state.user.records = action.payload.records;
+      if (state.user) {
+        state.user.records = action.payload.records;
+      } else {
+        console.error("User records don't exist");
+      }
     },
     setRecord: (state, action) => {
-      const updatedRecord = state.user.records((record) => {
+      const updatedRecord = state.user.records.map((record) => {
         if (record._id === action.payload.record._id)
           return action.payload.record;
         return record;
       });
-      state.workouts = updatedRecord;
+      state.user.records = updatedRecord;
     },
     setExercises: (state, action) => {
-      state.user.exercises = state.payload.exercises;
+      if (state.user.workout) {
+        state.user.workout.exercises = action.payload.exercises;
+      } else {
+        console.error("User exercises don't exist");
+      }
     },
     setExercise: (state, action) => {
-      const updatedExercise = state.user.exercises((exercise) => {
+      const updatedExercise = state.user.workout.exercises.map((exercise) => {
         if (exercise._id === action.payload.exercise._id)
           return action.payload.exercise;
         return exercise;
       });
-      state.exercises = updatedExercise;
+      state.user.workout.exercises = updatedExercise;
     },
   },
 });

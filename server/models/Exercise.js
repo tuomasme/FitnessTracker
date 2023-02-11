@@ -1,22 +1,16 @@
 import mongoose from "mongoose";
 
-const reqNumber = {
-  type: Number,
+const reqString = {
+  type: String,
   required: true,
 };
 
 const ExerciseSchema = new mongoose.Schema({
-  workoutId: {
-    type: String,
-    required: true,
-  },
-  exerciseName: {
-    type: String,
-    required: true,
-  },
-  exerciseSets: reqNumber,
-  exerciseReps: reqNumber,
-  exerciseWeight: reqNumber,
+  workoutId: reqString,
+  exerciseName: reqString,
+  exerciseSets: reqString,
+  exerciseReps: reqString,
+  exerciseWeight: reqString,
 });
 
 const Exercise = mongoose.model("Exercise", ExerciseSchema);

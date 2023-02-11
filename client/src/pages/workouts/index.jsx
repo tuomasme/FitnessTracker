@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setWorkouts } from "../../state/index.js";
+import { Link } from "react-router-dom";
 
 const WorkoutsPage = () => {
   const [error, setError] = useState("");
@@ -12,6 +13,7 @@ const WorkoutsPage = () => {
   const token = useSelector((state) => state.token);
   const workouts = useSelector((state) => state.user.workouts);
 
+  // Data fields of exercises of a workout
   const [exerciseData, setExerciseData] = useState([
     {
       userId: _id,
@@ -22,6 +24,7 @@ const WorkoutsPage = () => {
     },
   ]);
 
+  //Data fields of a workout
   const [workoutData, setWorkoutData] = useState({
     userId: _id,
     workoutName: "",
@@ -37,12 +40,13 @@ const WorkoutsPage = () => {
       const res = await axios.get(`http://localhost:5000/workouts/${_id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      let workouts = res.data;
       dispatch(
         setWorkouts({
-          workouts: res.data,
+          workouts: workouts,
         })
       );
-      setWorkoutsList(res.data);
+      setWorkoutsList(workouts);
       console.log("res: ", res.data);
       console.log("Workouts: ", workouts);
     } catch (error) {
@@ -120,9 +124,9 @@ const WorkoutsPage = () => {
     let exerciseObject = {
       userId: _id,
       exerciseName: "",
-      exerciseSets: 0,
-      exerciseReps: 0,
-      exerciseWeight: 0,
+      exerciseSets: "",
+      exerciseReps: "",
+      exerciseWeight: "",
     };
     setExerciseData([...exerciseData, exerciseObject]);
   };
@@ -282,10 +286,21 @@ const WorkoutsPage = () => {
                       width: "150px",
                     }}
                   >
+                    {workout.workoutDate}
+                  </td>
+                  <td
+                    style={{
+                      fontSize: "24px",
+                      padding: "10px 10px",
+                      width: "150px",
+                    }}
+                  >
                     {workout.workoutName}
                   </td>
                   <td>
-                    <button className="btn btn-warning btn-sm">Update</button>
+                    <Link to={"/updateworkout/" + workout._id}>
+                      <button className="btn btn-warning btn-sm">Update</button>
+                    </Link>
                   </td>
                   <td>
                     <button

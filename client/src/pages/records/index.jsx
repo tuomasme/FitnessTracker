@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setRecord, setRecords } from "../../state/index.js";
+import { Link } from "react-router-dom";
 
 const RecordsPage = () => {
   const [error, setError] = useState("");
@@ -19,6 +20,7 @@ const RecordsPage = () => {
   const [recordsList, setRecordsList] = useState([]);
   const [weightUnit, setWeightUnit] = useState("kg");
 
+  // Fetch records from the database
   const getRecords = async () => {
     try {
       const res = await axios.get(`http://localhost:5000/records/${_id}`, {
@@ -44,12 +46,10 @@ const RecordsPage = () => {
   }, []);
 
   const handleChange = ({ currentTarget: input }) => {
-    if (input.name === "recordWeight") {
-      setFormData({ ...formData, [input.name]: parseInt(input.value, 10) });
-    }
     setFormData({ ...formData, [input.name]: input.value });
   };
 
+  // Post a record to the database
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -74,6 +74,7 @@ const RecordsPage = () => {
     }
   };
 
+  // Delete a record from the database
   const deleteRecord = async (id) => {
     try {
       let res = await axios.delete(
@@ -89,18 +90,6 @@ const RecordsPage = () => {
       setError(error.res.data.message);
       console.log(error);
     }
-  };
-
-  const updateRecord = async (id) => {
-    let res = await axios.patch(`http://localhost:5000/records/${_id}/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    dispatch(
-      setRecord({
-        record: res.data,
-      })
-    );
-    getRecords();
   };
 
   return (
@@ -170,14 +159,9 @@ const RecordsPage = () => {
                     {record.recordWeight} {weightUnit}
                   </td>
                   <td>
-                    <button
-                      className="btn btn-warning btn-sm"
-                      onClick={() => {
-                        updateRecord(record._id);
-                      }}
-                    >
-                      Update
-                    </button>
+                    <Link to={"/updaterecord/" + record._id}>
+                      <button className="btn btn-warning btn-sm">Update</button>
+                    </Link>
                   </td>
                   <td>
                     <button

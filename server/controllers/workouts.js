@@ -3,15 +3,6 @@ import Workout from "../models/Workout.js";
 
 export const getWorkouts = async (req, res) => {
   try {
-    const workouts = await Workout.find();
-    res.status(200).json(workouts);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
-
-export const getUserWorkouts = async (req, res) => {
-  try {
     const { userId } = req.params;
     const workouts = await Workout.find({ userId });
     res.status(200).json(workouts);

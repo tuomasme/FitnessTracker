@@ -19,7 +19,12 @@ import {
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 
-const persistConfig = { key: "root", storage, version: 1 };
+const persistConfig = {
+  key: "root",
+  storage,
+  version: 1,
+  blacklist: ["authorization"],
+};
 const persistedReducer = persistReducer(persistConfig, authorizationReducer);
 const store = configureStore({
   reducer: persistedReducer,

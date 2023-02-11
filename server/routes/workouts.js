@@ -1,20 +1,16 @@
 import express from "express";
 import {
-  getWorkouts,
   addWorkout,
   deleteWorkout,
   editWorkout,
-  getUserWorkouts,
+  getWorkouts,
 } from "../controllers/workouts.js";
 import { verifyToken } from "../middleware/authorization.js";
 
 const router = express.Router();
 
-// Fetch all workouts
-router.get("/", verifyToken, getWorkouts);
-
 // Fetch workouts of one user
-router.get("/:userId/", verifyToken, getUserWorkouts);
+router.get("/:userId/", verifyToken, getWorkouts);
 
 // Add a workout
 router.post("/:userId/", verifyToken, addWorkout);

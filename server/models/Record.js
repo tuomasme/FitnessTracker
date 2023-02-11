@@ -10,7 +10,7 @@ const RecordSchema = new mongoose.Schema({
     required: true,
   },
   recordWeight: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
