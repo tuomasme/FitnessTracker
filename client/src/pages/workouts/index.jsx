@@ -142,180 +142,213 @@ const WorkoutsPage = () => {
   };
 
   return (
-    <div>
-      <h1 className="d-flex justify-content-center">Workouts</h1>
-      <NavBar />
-
-      <div>
-        <form onSubmit={submitHandler}>
-          <div className="d-flex justify-content-center">
-            <input
-              className="form-control form-outline w-25"
-              type="text"
-              placeholder="Workout name"
-              name="workoutName"
-              onChange={handleChange}
-              value={workoutData.workoutName}
-              required
-            />
-          </div>
-          <div className="d-flex justify-content-center">
-            <input
-              className="form-control form-outline w-25"
-              type="text"
-              placeholder="Workout type"
-              name="workoutType"
-              onChange={handleChange}
-              value={workoutData.workoutType}
-              required
-            />
-          </div>
-          <div className="d-flex justify-content-center">
-            <input
-              className="form-control form-outline w-25"
-              type="text"
-              placeholder="Workout date"
-              name="workoutDate"
-              onChange={handleChange}
-              value={workoutData.workoutDate}
-              required
-            />
-          </div>
-          <div>
-            <br />
-            <div>
-              {Array.from(exerciseData).map((exerciseField, index) => {
-                return (
-                  <div key={index}>
-                    <div className="d-flex justify-content-center">
-                      <input
-                        className="form-control form-outline w-25"
-                        type="text"
-                        placeholder="Exercise name"
-                        name="exerciseName"
-                        onChange={(event) =>
-                          handleExerciseFormChange(event, index)
-                        }
-                        value={exerciseField.exerciseName}
-                      />
-                    </div>
-                    <div className="d-flex justify-content-center">
-                      <input
-                        className="form-control form-outline w-25"
-                        type="text"
-                        placeholder="Exercise weight"
-                        name="exerciseWeight"
-                        onChange={(event) =>
-                          handleExerciseFormChange(event, index)
-                        }
-                        value={exerciseField.exerciseWeight}
-                      />
-                    </div>
-                    <div className="d-flex justify-content-center">
-                      <input
-                        className="form-control form-outline w-25"
-                        type="text"
-                        placeholder="Exercise sets"
-                        name="exerciseSets"
-                        onChange={(event) =>
-                          handleExerciseFormChange(event, index)
-                        }
-                        value={exerciseField.exerciseSets}
-                      />
-                    </div>
-                    <div className="d-flex justify-content-center">
-                      <input
-                        className="form-control form-outline w-25"
-                        type="text"
-                        placeholder="Exercise reps"
-                        name="exerciseReps"
-                        onChange={(event) =>
-                          handleExerciseFormChange(event, index)
-                        }
-                        value={exerciseField.exerciseReps}
-                      />
-                    </div>
-                    <div className="d-flex justify-content-center">
-                      <button
-                        className="form-control form-outline w-25 btn btn-danger"
-                        onClick={() => deleteExerciseFields(index)}
-                      >
-                        x
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <br />
-          <div className="d-flex justify-content-center">
-            <button
-              className="form-control form-outline w-25 btn btn-primary"
-              onClick={addExerciseFields}
-            >
-              Add exercise
-            </button>
-          </div>
-          <br />
-          {error && (
-            <div className="d-flex justify-content-center">{error}</div>
-          )}
-          <div className="d-flex justify-content-center">
-            <button
-              className="form-control btn btn-success form-outline w-25"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              Add workout
-            </button>
-          </div>
-        </form>
+    <div className="container">
+      <div className="row">
+        <h1 className="d-flex justify-content-center">Workouts</h1>
       </div>
-      <br />
+      <div className="row">
+        <NavBar />
+      </div>
       <div>
-        {workoutsList &&
-          workoutsList.map((workout) => (
-            <table key={workout._id} className="d-flex justify-content-center">
-              <tbody>
-                <tr>
-                  <td
-                    style={{
-                      fontSize: "24px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  >
-                    {workout.workoutDate}
-                  </td>
-                  <td
-                    style={{
-                      fontSize: "24px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  >
-                    {workout.workoutName}
-                  </td>
-                  <td>
-                    <Link to={"/updateworkout/" + workout._id}>
-                      <button className="btn btn-warning btn-sm">Update</button>
-                    </Link>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => {
-                        deleteWorkout(workout._id);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          ))}
+        <div className="row">
+          <form>
+            <div className="d-flex justify-content-center">
+              <input
+                className="form-control form-outline w-50"
+                type="text"
+                placeholder="Search for workouts"
+                name="searchWorkoutName"
+              />
+              <button
+                className="form-control btn btn-primary form-outline w-25"
+                type="submit"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-4">
+          <h2 className="d-flex justify-content-center">Add a new workout</h2>
+          <form onSubmit={submitHandler}>
+            <div className="d-flex justify-content-center">
+              <input
+                className="form-control form-outline w-75"
+                type="text"
+                placeholder="Workout name"
+                name="workoutName"
+                onChange={handleChange}
+                value={workoutData.workoutName}
+                required
+              />
+            </div>
+            <div className="d-flex justify-content-center">
+              <input
+                className="form-control form-outline w-75"
+                type="text"
+                placeholder="Workout type"
+                name="workoutType"
+                onChange={handleChange}
+                value={workoutData.workoutType}
+                required
+              />
+            </div>
+            <div className="d-flex justify-content-center">
+              <input
+                className="form-control form-outline w-75"
+                type="text"
+                placeholder="Workout date"
+                name="workoutDate"
+                onChange={handleChange}
+                value={workoutData.workoutDate}
+                required
+              />
+            </div>
+            <div>
+              <br />
+              <div>
+                {Array.from(exerciseData).map((exerciseField, index) => {
+                  return (
+                    <div key={index}>
+                      <div className="d-flex justify-content-center">
+                        <input
+                          className="form-control form-outline w-75"
+                          type="text"
+                          placeholder="Exercise name"
+                          name="exerciseName"
+                          onChange={(event) =>
+                            handleExerciseFormChange(event, index)
+                          }
+                          value={exerciseField.exerciseName}
+                        />
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        <input
+                          className="form-control form-outline w-75"
+                          type="text"
+                          placeholder="Exercise weight"
+                          name="exerciseWeight"
+                          onChange={(event) =>
+                            handleExerciseFormChange(event, index)
+                          }
+                          value={exerciseField.exerciseWeight}
+                        />
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        <input
+                          className="form-control form-outline w-75"
+                          type="text"
+                          placeholder="Exercise sets"
+                          name="exerciseSets"
+                          onChange={(event) =>
+                            handleExerciseFormChange(event, index)
+                          }
+                          value={exerciseField.exerciseSets}
+                        />
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        <input
+                          className="form-control form-outline w-75"
+                          type="text"
+                          placeholder="Exercise reps"
+                          name="exerciseReps"
+                          onChange={(event) =>
+                            handleExerciseFormChange(event, index)
+                          }
+                          value={exerciseField.exerciseReps}
+                        />
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="form-control form-outline w-75 btn btn-danger"
+                          onClick={() => deleteExerciseFields(index)}
+                        >
+                          x
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <br />
+            <div className="d-flex justify-content-center">
+              <button
+                className="form-control form-outline w-75 btn btn-primary"
+                onClick={addExerciseFields}
+              >
+                Add exercise fields
+              </button>
+            </div>
+            <br />
+            {error && (
+              <div className="d-flex justify-content-center">{error}</div>
+            )}
+            <div className="d-flex justify-content-center">
+              <button
+                className="form-control btn btn-success form-outline w-75"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Add workout
+              </button>
+            </div>
+          </form>
+        </div>
+        <div className="col-8">
+          <form>
+            <h2 className="d-flex justify-content-center">Your workouts</h2>
+            {workoutsList &&
+              workoutsList.map((workout) => (
+                <table
+                  key={workout._id}
+                  className="d-flex justify-content-center"
+                >
+                  <tbody>
+                    <tr>
+                      <td
+                        style={{
+                          fontSize: "24px",
+                          padding: "10px 10px",
+                          width: "150px",
+                        }}
+                      >
+                        {workout.workoutDate}
+                      </td>
+                      <td
+                        style={{
+                          fontSize: "24px",
+                          padding: "10px 10px",
+                          width: "150px",
+                        }}
+                      >
+                        {workout.workoutName}
+                      </td>
+                      <td>
+                        <Link to={"/updateworkout/" + workout._id}>
+                          <button className="btn btn-warning btn-sm">
+                            Update
+                          </button>
+                        </Link>
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => {
+                            deleteWorkout(workout._id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              ))}
+          </form>
+        </div>
       </div>
     </div>
   );
