@@ -48,14 +48,17 @@ export const deleteRecord = async (req, res) => {
 
 export const editRecord = async (req, res) => {
   try {
-    const editRecord = await Record.updateOne(
-      { _id: req.params.id },
+    const { id } = req.params;
+    const { recordName, recordWeight } = req.body;
+    const editRecord = await Record.findByIdAndUpdate(
+      { _id: id },
       {
-        $set: req.body,
+        recordName,
+        recordWeight,
       }
     );
     res.status(200).json(editRecord);
   } catch (error) {
-    res.json(404).json({ message: err.message });
+    res.json(500).json({ message: err.message });
   }
 };

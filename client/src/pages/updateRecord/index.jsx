@@ -20,28 +20,6 @@ const UpdateRecord = () => {
     recordWeight: "",
   });
 
-  /*   const getRecord = async () => {
-    try {
-      const res = await axios
-        .get(`http://localhost:5000/records/${_id}/${params.id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          console.log("res: ", res.data);
-          console.log("Record: ", record);
-          dispatch(
-            setRecord({
-              record: res.data,
-            })
-          );
-          return res.data;
-        });
-    } catch (error) {
-      setError(error.res.data.message);
-      console.log(error);
-    }
-  }; */
-
   // Fetch data about the record to be updated
   const getRecord = async () => {
     const response = await fetch(
@@ -83,7 +61,7 @@ const UpdateRecord = () => {
     }
   };  */
 
-  // Update the record
+  // TODO: Update the selected record
   const updateRecord = async (e) => {
     console.log(params.id);
     e.preventDefault();
@@ -95,7 +73,7 @@ const UpdateRecord = () => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId: loggedInUserId }),
+        body: JSON.stringify({ userId: loggedInUserId, formData }),
       }
     );
     const updatedRecord = await res.json();

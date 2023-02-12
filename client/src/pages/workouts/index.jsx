@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setWorkouts } from "../../state/index.js";
 import { Link } from "react-router-dom";
+import "./styles.css";
 
 const WorkoutsPage = () => {
   const [error, setError] = useState("");
@@ -12,6 +13,7 @@ const WorkoutsPage = () => {
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const workouts = useSelector((state) => state.user.workouts);
+  const [searchValue, setSearchValue] = useState("");
 
   // Data fields of exercises of a workout
   const [exerciseData, setExerciseData] = useState([
@@ -60,12 +62,6 @@ const WorkoutsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /*   useEffect(() => {
-    let newState = Array.from(workouts).map((e) => e); 
-    setWorkouts(newState); 
-    console.log("Workouts new state: ", newState);
-  }, [workouts]); */
-
   const handleChange = ({ currentTarget: input }) => {
     setWorkoutData({ ...workoutData, [input.name]: input.value });
   };
@@ -76,8 +72,10 @@ const WorkoutsPage = () => {
     setExerciseData(exerciseFormData);
   };
 
+  // Add a workout to the database
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(workoutData);
     try {
       let res = await axios.post(
         `http://localhost:5000/workouts/${_id}/`,
@@ -100,6 +98,7 @@ const WorkoutsPage = () => {
     }
   };
 
+  // Delete the selected workout from the database
   const deleteWorkout = async (id) => {
     try {
       let res = await axios.delete(
@@ -131,7 +130,7 @@ const WorkoutsPage = () => {
     setExerciseData([...exerciseData, exerciseObject]);
   };
 
-  const deleteExerciseFields = (event, index) => {
+  const deleteExerciseFields = (index) => {
     let exerciseFormData = [...exerciseData];
     exerciseFormData.splice(index, 1);
     setExerciseData(exerciseFormData);
@@ -139,6 +138,16 @@ const WorkoutsPage = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+  };
+
+  const onChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  // Set autocomplete input search term
+  const onSearch = (searchTerm) => {
+    setSearchValue(searchTerm);
+    console.log(searchTerm);
   };
 
   return (
@@ -150,21 +159,49 @@ const WorkoutsPage = () => {
         <NavBar />
       </div>
       <div>
-        <div className="row">
-          <form>
-            <div className="d-flex justify-content-center">
-              <input
-                className="form-control form-outline w-50"
-                type="text"
-                placeholder="Search for workouts"
-                name="searchWorkoutName"
-              />
-              <button
-                className="form-control btn btn-primary form-outline w-25"
-                type="submit"
-              >
-                Search
-              </button>
+        <div>
+          <form onSubmit={submitHandler}>
+            <div>
+              <div className="d-flex justify-content-center search-inner">
+                <input
+                  className="form-control form-outline w-50"
+                  type="text"
+                  placeholder="Search for workouts"
+                  name="searchWorkoutName"
+                  value={searchValue}
+                  onChange={onChange}
+                />
+                <button
+                  className="form-control btn btn-primary form-outline w-25"
+                  type="submit"
+                  onClick={() => onSearch(searchValue)}
+                >
+                  Search
+                </button>
+              </div>
+              <div className="dropdown d-flex form-outline w-50">
+                {workouts
+                  .filter((workout) => {
+                    const searchTerm = searchValue.toLowerCase();
+                    const name = workout.workoutName.toLowerCase();
+
+                    return (
+                      searchTerm &&
+                      name.startsWith(searchTerm) &&
+                      name !== searchTerm
+                    );
+                  })
+                  .slice(0, 10)
+                  .map((workout) => (
+                    <div
+                      className="dropdown-row"
+                      onClick={() => onSearch(workout.workoutName)}
+                      key={workout._id}
+                    >
+                      {workout.workoutName}
+                    </div>
+                  ))}
+              </div>
             </div>
           </form>
         </div>
@@ -300,6 +337,18 @@ const WorkoutsPage = () => {
         <div className="col-8">
           <form>
             <h2 className="d-flex justify-content-center">Your workouts</h2>
+            <div className="d-flex justify-content-center">
+              <select className="form-control form-outline w-50">
+                <option value="" disabled hidden selected>
+                  Select workout type
+                </option>
+                {Array.from(
+                  new Set(workouts.map((workout) => workout.workoutType))
+                ).map((workoutType) => {
+                  return <option value={workoutType}>{workoutType}</option>;
+                })}
+              </select>
+            </div>
             {workoutsList &&
               workoutsList.map((workout) => (
                 <table
