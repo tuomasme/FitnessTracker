@@ -1,16 +1,16 @@
 (MERN stack) FitnessTracker app with registration and login functions where the user can
 
-- fetch their workouts (and exercises + weights + reps + date) from the database
-- filter workouts with autocomplete input
-- filter workouts with type combo box
-- add, delete and update workouts and exercises
+- fetch their dated workouts (including exercises, exercise weights, exercise reps) from the database
+- filter their workouts by name (autocomplete input)
+- filter their workouts by type (select element)
+- add, delete and update their workouts
 - fetch their records from the database
-- add, delete and update records
+- add, delete and update their records
 
 TODO:
 
 - fetch user's workouts WITH EXERCISES from the database
 - add a workout WITH EXERCISES
 - update records and workouts
-- filter workouts with autocompelete input and combo box
-- change workout date input from a text input to a datetime picker
+- filter user's workouts by name and type (autocomplete input and select element implemented)
+- change date input of a workout from a text input to a datetime picker
