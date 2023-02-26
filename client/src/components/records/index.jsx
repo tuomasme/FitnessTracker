@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setRecord, setRecords } from "../../state/index.js";
 import { Link } from "react-router-dom";
+import "./styles.css";
 
 const RecordsPage = () => {
   const [error, setError] = useState("");
@@ -94,12 +95,12 @@ const RecordsPage = () => {
 
   return (
     <div>
-      <h1 className="d-flex justify-content-center">Records</h1>
+      <h1 className="center">Records</h1>
       <NavBar />
 
       <div>
         <form onSubmit={handleSubmit}>
-          <div className="d-flex justify-content-center">
+          <div className="center">
             <input
               className="form-control form-outline w-25"
               type="text"
@@ -110,7 +111,7 @@ const RecordsPage = () => {
               required
             />
           </div>
-          <div className="d-flex justify-content-center">
+          <div className="center">
             <input
               className="form-control form-outline w-25"
               type="text"
@@ -121,10 +122,8 @@ const RecordsPage = () => {
               required
             />
           </div>
-          {error && (
-            <div className="d-flex justify-content-center">{error}</div>
-          )}
-          <div className="d-flex justify-content-center">
+          {error && <div className="center">{error}</div>}
+          <div className="center">
             <button
               className="form-control btn btn-success form-outline w-25"
               type="submit"
@@ -137,7 +136,7 @@ const RecordsPage = () => {
       <div>
         {recordsList &&
           recordsList.map((record) => (
-            <table key={record._id} className="d-flex justify-content-center">
+            <table key={record._id} className="center">
               <tbody>
                 <tr>
                   <td

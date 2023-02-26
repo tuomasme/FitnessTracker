@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setWorkout } from "../../state/index.js";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import "./styles.css";
 
 const UpdateWorkout = () => {
   const [error, setError] = useState("");
@@ -104,11 +105,11 @@ const UpdateWorkout = () => {
   return (
     <div>
       <div>
-        <h1 className="d-flex justify-content-center">Update workout</h1>
+        <h1 className="center">Update workout</h1>
         <NavBar />
       </div>
       <form onSubmit={updateWorkout}>
-        <div className="d-flex justify-content-center">
+        <div className="center">
           <input
             className="form-control form-outline w-25"
             type="text"
@@ -119,7 +120,7 @@ const UpdateWorkout = () => {
             required
           />
         </div>
-        <div className="d-flex justify-content-center">
+        <div className="center">
           <input
             className="form-control form-outline w-25"
             type="text"
@@ -130,7 +131,7 @@ const UpdateWorkout = () => {
             required
           />
         </div>
-        <div className="d-flex justify-content-center">
+        <div className="center">
           <input
             className="form-control form-outline w-25"
             type="text"
@@ -147,7 +148,7 @@ const UpdateWorkout = () => {
             {Array.from(exerciseData).map((exerciseField, index) => {
               return (
                 <div key={index}>
-                  <div className="d-flex justify-content-center">
+                  <div className="center">
                     <input
                       className="form-control form-outline w-25"
                       type="text"
@@ -159,7 +160,7 @@ const UpdateWorkout = () => {
                       value={exerciseField.exerciseName}
                     />
                   </div>
-                  <div className="d-flex justify-content-center">
+                  <div className="center">
                     <input
                       className="form-control form-outline w-25"
                       type="text"
@@ -171,7 +172,7 @@ const UpdateWorkout = () => {
                       value={exerciseField.exerciseWeight}
                     />
                   </div>
-                  <div className="d-flex justify-content-center">
+                  <div className="center">
                     <input
                       className="form-control form-outline w-25"
                       type="text"
@@ -183,7 +184,7 @@ const UpdateWorkout = () => {
                       value={exerciseField.exerciseSets}
                     />
                   </div>
-                  <div className="d-flex justify-content-center">
+                  <div className="center">
                     <input
                       className="form-control form-outline w-25"
                       type="text"
@@ -195,7 +196,7 @@ const UpdateWorkout = () => {
                       value={exerciseField.exerciseReps}
                     />
                   </div>
-                  <div className="d-flex justify-content-center">
+                  <div className="center">
                     <button
                       className="form-control form-outline w-25 btn btn-danger"
                       onClick={() => deleteExerciseFields(index)}
@@ -208,7 +209,7 @@ const UpdateWorkout = () => {
             })}
           </div>
         </div>
-        <div className="d-flex justify-content-center">
+        <div className="center">
           <button
             className="form-control form-outline w-25 btn btn-primary"
             onClick={addExerciseFields}
@@ -216,8 +217,8 @@ const UpdateWorkout = () => {
             Add exercise
           </button>
         </div>
-        {error && <div className="d-flex justify-content-center">{error}</div>}
-        <div className="d-flex justify-content-center">
+        {error && <div className="center">{error}</div>}
+        <div className="center">
           <button
             className="form-control btn btn-warning form-outline w-25"
             type="submit"

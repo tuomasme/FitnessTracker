@@ -4,13 +4,14 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import WorkoutsPage from "./pages/workouts";
-import RecordsPage from "./pages/records";
-import Login from "./pages/login";
-import Register from "./pages/register";
+import WorkoutsPage from "./components/workouts";
+import RecordsPage from "./components/records";
+import Login from "./components/login";
+import Register from "./components/register";
 import { useSelector } from "react-redux";
-import UpdateRecord from "./pages/updateRecord";
-import UpdateWorkout from "./pages/updateWorkout";
+import AddWorkout from "./components/addWorkout";
+import UpdateRecord from "./components/updateRecord";
+import UpdateWorkout from "./components/updateWorkout";
 
 const App = () => {
   const isAuthorized = Boolean(useSelector((state) => state.token));
@@ -23,6 +24,10 @@ const App = () => {
           <Route
             path="/workouts"
             element={isAuthorized ? <WorkoutsPage /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/addworkout"
+            element={isAuthorized ? <AddWorkout /> : <Navigate to="/" />}
           />
           <Route
             path="/updateworkout/:id"

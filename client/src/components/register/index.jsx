@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import "./styles.css";
 
 const Register = () => {
   const [data, setData] = useState({
@@ -40,10 +41,10 @@ const Register = () => {
       <div>
         <div>
           <form onSubmit={handleSubmit}>
-            <div className="d-flex justify-content-center">
+            <div className="center">
               <h1>Register</h1>
             </div>
-            <div className="d-flex justify-content-center">
+            <div className="center">
               <input
                 className="form-control form-outline w-25"
                 type="text"
@@ -54,7 +55,7 @@ const Register = () => {
                 required
               />
             </div>
-            <div className="d-flex justify-content-center">
+            <div className="center">
               <input
                 className="form-control form-outline w-25"
                 type="text"
@@ -65,7 +66,7 @@ const Register = () => {
                 required
               />
             </div>
-            <div className="d-flex justify-content-center">
+            <div className="center">
               <input
                 className="form-control form-outline w-25"
                 type="email"
@@ -76,7 +77,7 @@ const Register = () => {
                 required
               />
             </div>
-            <div className="d-flex justify-content-center">
+            <div className="center">
               <input
                 className="form-control form-outline w-25"
                 type="username"
@@ -87,7 +88,7 @@ const Register = () => {
                 required
               />
             </div>
-            <div className="d-flex justify-content-center">
+            <div className="center">
               <input
                 className="form-control form-outline w-25"
                 type="password"
@@ -99,7 +100,7 @@ const Register = () => {
               />
             </div>
             {error && <div>{error}</div>}
-            <div className="d-flex justify-content-center">
+            <div className="center">
               <button
                 className="form-control form-outline w-25 btn btn-primary"
                 type="submit"
@@ -110,7 +111,7 @@ const Register = () => {
           </form>
         </div>
         <br />
-        <div className="d-flex justify-content-center">
+        <div className="center">
           <Link to="/">
             <div type="button btn btn-primary">
               Already have an account? Login here.

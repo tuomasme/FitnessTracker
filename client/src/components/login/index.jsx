@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../state/index.js";
+import "./styles.css";
 
 const Login = () => {
   const [data, setData] = useState({ username: "", password: "" });
@@ -39,11 +40,11 @@ const Login = () => {
     <div className="h-100">
       <div>
         <div>
-          <h1 className="d-flex justify-content-center">Login</h1>
+          <h1 className="center">Login</h1>
         </div>
         <div>
           <form onSubmit={handleSubmit}>
-            <div className="d-flex justify-content-center">
+            <div className="center">
               <input
                 className="form-control form-outline w-25"
                 type="text"
@@ -54,7 +55,7 @@ const Login = () => {
                 required
               />
             </div>
-            <div className="d-flex justify-content-center">
+            <div className="center">
               <input
                 className="form-control form-outline w-25"
                 type="password"
@@ -65,10 +66,8 @@ const Login = () => {
                 required
               />
             </div>
-            {error && (
-              <div className="d-flex justify-content-center">{error}</div>
-            )}
-            <div className="d-flex justify-content-center">
+            {error && <div className="center">{error}</div>}
+            <div className="center">
               <button
                 className="form-control form-outline w-25 btn btn-primary"
                 type="submit"
@@ -80,7 +79,7 @@ const Login = () => {
         </div>
       </div>
       <br />
-      <div className="d-flex justify-content-center">
+      <div className="center">
         <Link to="/register">
           <div type="button">Don't have an account? Sign Up here.</div>
         </Link>
