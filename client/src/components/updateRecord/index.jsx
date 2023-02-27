@@ -13,7 +13,6 @@ const UpdateRecord = () => {
   const token = useSelector((state) => state.token);
   const params = useParams();
   const record = useSelector((state) => state.user.record);
-  const loggedInUserId = useSelector((state) => state.user._id);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userId: _id,
@@ -65,22 +64,27 @@ const UpdateRecord = () => {
   // TODO: Update the selected record
   const updateRecord = async (e) => {
     console.log(params.id);
+    console.log(_id);
     e.preventDefault();
-    const res = await fetch(
-      `http://localhost:5000/records/${_id}/${params.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId: loggedInUserId, formData }),
-      }
-    );
-    const updatedRecord = await res.json();
-    dispatch(setRecord({ record: updateRecord }));
-    console.log(updatedRecord);
-    navigate("/records");
+    try {
+      const res = await fetch(
+        `http://localhost:5000/records/${_id}/${params.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: _id, formData }),
+        }
+      );
+      const updatedRecord = await res.json();
+      dispatch(setRecord({ updatedRecord }));
+      console.log(updatedRecord);
+      navigate("/records");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

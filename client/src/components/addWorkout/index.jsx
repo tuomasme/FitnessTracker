@@ -29,9 +29,7 @@ const AddWorkout = () => {
     workoutName: "",
     workoutType: "",
     workoutDate: "",
-    workoutExercises: [
-      /* exerciseData */
-    ],
+    workoutExercises: [],
   });
 
   const [workoutsList, setWorkoutsList] = useState([]);
@@ -74,7 +72,6 @@ const AddWorkout = () => {
   const addExerciseFields = (event) => {
     event.preventDefault();
     let exerciseObject = {
-      userId: _id,
       exerciseName: "",
       exerciseSets: "",
       exerciseReps: "",
@@ -96,7 +93,7 @@ const AddWorkout = () => {
   return (
     <div className="container">
       <div className="row">
-        <h1 className="center">Add a workout</h1>
+        <h1 className="center">New workout</h1>
       </div>
       <div className="row">
         <NavBar />
@@ -221,7 +218,7 @@ const AddWorkout = () => {
               type="submit"
               onClick={handleSubmit}
             >
-              Add workout
+              Create workout
             </button>
           </div>
         </form>

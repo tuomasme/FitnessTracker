@@ -16,7 +16,10 @@ const WorkoutsPage = () => {
   const [searchValue, setSearchValue] = useState("");
   const [workoutsList, setWorkoutsList] = useState([]);
   const [weightUnit, setWeightUnit] = useState("kg");
+  const [typeFilterText, updateTypeFilterText] = useState("");
+  const [typeValueSelected, setTypeValueSelected] = useState("");
 
+  // Fetch workouts from the database
   const getWorkouts = async () => {
     try {
       const res = await axios.get(`http://localhost:5000/workouts/${_id}`, {
@@ -66,6 +69,7 @@ const WorkoutsPage = () => {
     event.preventDefault();
   };
 
+  // Set autocomplete search value on change
   const onChange = (event) => {
     setSearchValue(event.target.value);
   };
@@ -74,6 +78,16 @@ const WorkoutsPage = () => {
   const onSearch = (searchTerm) => {
     setSearchValue(searchTerm);
     console.log(searchTerm);
+  };
+
+  // Workout type filter value changed
+  const onTypeValueChanged = (event) => {
+    onTypeValueSelected(event.target.value);
+  };
+
+  // Workout type filter value selected
+  const onTypeValueSelected = (typeValue) => {
+    updateTypeFilterText(typeValue);
   };
 
   return (
@@ -102,7 +116,7 @@ const WorkoutsPage = () => {
             Search
           </button>
         </div>
-        <div className="dropdown d-flex form-outline w-50">
+        <div className="dropdown form-outline w-50 center">
           {workouts
             .filter((workout) => {
               const searchTerm = searchValue.toLowerCase();
@@ -125,10 +139,12 @@ const WorkoutsPage = () => {
         </div>
       </form>
       <form className="row center">
-        <select className="form-control form-outline w-50">
-          <option value="" disabled hidden selected>
-            Filter by workout type
-          </option>
+        <select
+          className="form-control form-outline w-50"
+          onChange={onTypeValueChanged}
+          setTypeValueSelected={onTypeValueSelected}
+        >
+          <option defaultValue="">Filter by workout type</option>
           {Array.from(
             new Set(workouts.map((workout) => workout.workoutType))
           ).map((workoutType) => {
@@ -136,109 +152,27 @@ const WorkoutsPage = () => {
           })}
         </select>
       </form>
-      <Link to={"/addworkout"} className="center remove-underline">
-        <button className="btn btn-success form-outline w-25">
-          Add a workout
-        </button>
-      </Link>
       <form className="center">
         <table>
           <thead>
             <tr className="center">
-              <th
-                style={{
-                  fontSize: "24px",
-                  padding: "10px 10px",
-                  width: "150px",
-                }}
-              ></th>
-              <th
-                style={{
-                  fontSize: "24px",
-                  padding: "10px 10px",
-                  width: "150px",
-                }}
-              >
-                Name
-              </th>
-              <th
-                style={{
-                  fontSize: "24px",
-                  padding: "10px 10px",
-                  width: "150px",
-                }}
-              >
-                Type
-              </th>
-              <th
-                style={{
-                  fontSize: "24px",
-                  padding: "10px 10px",
-                  width: "150px",
-                }}
-              ></th>
-              <th
-                style={{
-                  fontSize: "24px",
-                  padding: "10px 10px",
-                  width: "150px",
-                }}
-              ></th>
-              <th
-                style={{
-                  fontSize: "24px",
-                  padding: "10px 10px",
-                  width: "150px",
-                }}
-              ></th>
+              <th className="workout-header"></th>
+              <th className="workout-header">Name</th>
+              <th className="workout-header">Type</th>
+              <th className="workout-header"></th>
+              <th className="workout-header"></th>
+              <th className="workout-header"></th>
             </tr>
           </thead>
           {workoutsList &&
             workoutsList.map((workout) => (
               <tbody>
                 <tr key={workout._id} className="center">
-                  <td
-                    style={{
-                      fontSize: "24px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  >
-                    {workout.workoutDate}
-                  </td>
-                  <td
-                    style={{
-                      fontSize: "24px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  >
-                    {workout.workoutName}
-                  </td>
-                  <td
-                    style={{
-                      fontSize: "24px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  >
-                    {workout.workoutType}
-                  </td>
-                  <td
-                    style={{
-                      fontSize: "24px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  ></td>
-
-                  <td
-                    style={{
-                      fontSize: "24px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  >
+                  <td className="workout-row">{workout.workoutDate}</td>
+                  <td className="workout-row">{workout.workoutName}</td>
+                  <td className="workout-row">{workout.workoutType}</td>
+                  <td className="workout-cell-empty">{workout.workoutType}</td>
+                  <td className="workout-row-button">
                     <Link to={"/updateworkout/" + workout._id}>
                       <button
                         className="btn btn-warning btn-sm"
@@ -248,13 +182,7 @@ const WorkoutsPage = () => {
                       </button>
                     </Link>
                   </td>
-                  <td
-                    style={{
-                      fontSize: "24px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  >
+                  <td className="workout-row">
                     <button
                       className="btn btn-danger btn-sm"
                       style={{ padding: "10px 10px" }}
@@ -267,124 +195,26 @@ const WorkoutsPage = () => {
                   </td>
                 </tr>
                 <tr className="center">
-                  <th
-                    style={{
-                      fontSize: "16px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  ></th>
-                  <th
-                    style={{
-                      fontSize: "16px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  >
-                    Name
-                  </th>
-                  <th
-                    style={{
-                      fontSize: "16px",
-                      padding: "10px 10px",
-                      width: "100px",
-                    }}
-                  >
-                    Sets
-                  </th>
-                  <th
-                    style={{
-                      fontSize: "16px",
-                      padding: "10px 10px",
-                      width: "100px",
-                    }}
-                  >
-                    Weight
-                  </th>
-                  <th
-                    style={{
-                      fontSize: "16px",
-                      padding: "10px 10px",
-                      width: "100px",
-                    }}
-                  >
-                    Reps
-                  </th>
-                  <th
-                    style={{
-                      fontSize: "16px",
-                      padding: "10px 10px",
-                      width: "100px",
-                    }}
-                  ></th>
-                  <th
-                    style={{
-                      fontSize: "16px",
-                      padding: "10px 10px",
-                      width: "100px",
-                    }}
-                  ></th>
+                  <th className="exercise-cell-first-empty "></th>
+                  <th className="exercise-header">Name</th>
+                  <th className="exercise-header">Sets</th>
+                  <th className="exercise-header">Weight</th>
+                  <th className="exercise-header">Reps</th>
+                  <th className="exercise-header"></th>
+                  <th className="exercise-header"></th>
                 </tr>
                 {workout.workoutExercises &&
                   workout.workoutExercises.map((exercise) => (
                     <tr key={exercise.exerciseName} className="center">
-                      <td
-                        style={{
-                          fontSize: "16px",
-                          padding: "10px 10px",
-                          width: "150px",
-                        }}
-                      ></td>
-                      <td
-                        style={{
-                          fontSize: "16px",
-                          padding: "10px 10px",
-                          width: "150px",
-                        }}
-                      >
-                        {exercise.exerciseName}
-                      </td>
-                      <td
-                        style={{
-                          fontSize: "16px",
-                          padding: "10px 10px",
-                          width: "100px",
-                        }}
-                      >
-                        {exercise.exerciseSets}
-                      </td>
-                      <td
-                        style={{
-                          fontSize: "16px",
-                          padding: "10px 10px",
-                          width: "100px",
-                        }}
-                      >
+                      <td className="exercise-cell-first-empty"></td>
+                      <td className="exercise-row">{exercise.exerciseName}</td>
+                      <td className="exercise-row">{exercise.exerciseSets}</td>
+                      <td className="exercise-row">
                         {exercise.exerciseWeight} {weightUnit}
                       </td>
-                      <td
-                        style={{
-                          fontSize: "16px",
-                          padding: "10px 10px",
-                          width: "100px",
-                        }}
-                      >
-                        {exercise.exerciseReps}
-                      </td>
-                      <td
-                        style={{
-                          fontSize: "16px",
-                          padding: "10px 10px",
-                          width: "100px",
-                        }}
-                      ></td>
-                      <td
-                        style={{
-                          fontSize: "16px",
-                          padding: "10px 10px",
-                          width: "100px",
-                        }}
-                      ></td>
+                      <td className="exercise-row">{exercise.exerciseReps}</td>
+                      <td className="exercise-cell-empty"></td>
+                      <td className="exercise-cell-empty"></td>
                     </tr>
                   ))}
               </tbody>

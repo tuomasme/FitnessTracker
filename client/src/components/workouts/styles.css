@@ -3,15 +3,12 @@
     justify-content: center;
 }
 
-.remove-underline {
-    text-decoration: none;
-}
-
 .dropdown {
     background-color: white;
     display: flex;
     flex-direction: column;
     border: 1px solid gray;
+    justify-content: center;
 }
 
 .dropdown:empty {
@@ -24,6 +21,54 @@
     margin: 2px 0;
 }
 
+.exercise-cell-empty {
+    font-size: 16px;
+    padding: 10px 10px;
+    width: 125px;
+}
+
+.exercise-cell-first-empty {
+    font-size: 16px;
+    padding: 10px 10px;
+    width: 150px;
+}
+
+.exercise-header {
+    font-size: 16px;
+    padding: 10px 10px;
+    width: 125px;
+}
+
+.exercise-row{
+    font-size: 16px;
+    padding: 10px 10px;
+    width: 125px;
+}
+
 .search-inner {
     display: flex;
+}
+
+.workout-cell-empty {
+    font-size: 24px;
+    padding: 10px 10px;
+    width: 200px;
+}
+
+.workout-header{
+    font-size: 24px;
+    padding: 10px 10px;
+    width: 150px;
+}
+
+.workout-row{
+    font-size: 24px;
+    padding: 10px 10px;
+    width: 150px;
+}
+
+.workout-row-button{
+    font-size: 24px;
+    padding: 10px 10px;
+    width: 100px;
 }
