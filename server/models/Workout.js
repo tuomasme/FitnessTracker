@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Exercise from "./Exercise.js";
 
 const reqString = {
   type: String,
@@ -11,7 +10,14 @@ const WorkoutSchema = new mongoose.Schema({
   workoutName: reqString,
   workoutType: reqString,
   workoutDate: reqString,
-  workoutExercises: [Exercise.schema],
+  workoutExercises: [
+    {
+      exerciseName: reqString,
+      exerciseSets: reqString,
+      exerciseReps: reqString,
+      exerciseWeight: reqString,
+    },
+  ],
 });
 
 const Workout = mongoose.model("Workout", WorkoutSchema);

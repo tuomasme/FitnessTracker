@@ -9,7 +9,6 @@
 
 TODO:
 
-- fetch user's workouts WITH EXERCISES from the database
 - add a workout WITH EXERCISES
 - update records and workouts
 - filter user's workouts by name and type (autocomplete input and select element implemented)

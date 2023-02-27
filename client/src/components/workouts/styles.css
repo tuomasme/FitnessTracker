@@ -3,6 +3,10 @@
     justify-content: center;
 }
 
+.remove-underline {
+    text-decoration: none;
+}
+
 .dropdown {
     background-color: white;
     display: flex;

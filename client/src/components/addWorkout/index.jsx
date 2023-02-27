@@ -16,7 +16,6 @@ const AddWorkout = () => {
   // Data fields of exercises of a workout
   const [exerciseData, setExerciseData] = useState([
     {
-      userId: _id,
       exerciseName: "",
       exerciseSets: "",
       exerciseReps: "",
@@ -30,7 +29,9 @@ const AddWorkout = () => {
     workoutName: "",
     workoutType: "",
     workoutDate: "",
-    workoutExercises: [],
+    workoutExercises: [
+      /* exerciseData */
+    ],
   });
 
   const [workoutsList, setWorkoutsList] = useState([]);
