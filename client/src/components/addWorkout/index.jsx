@@ -46,8 +46,8 @@ const AddWorkout = () => {
 
   // Add a workout to the database
   const handleSubmit = async (e) => {
+    workoutData.workoutExercises = exerciseData;
     e.preventDefault();
-    console.log(workoutData);
     try {
       let res = await axios.post(
         `http://localhost:5000/workouts/${_id}/`,
@@ -136,68 +136,69 @@ const AddWorkout = () => {
           <div>
             <br />
             <div>
-              {Array.from(exerciseData).map((exerciseField, index) => {
-                return (
-                  <div key={index}>
-                    <div className="center">
-                      <input
-                        className="form-control form-outline w-25"
-                        type="text"
-                        placeholder="Exercise name"
-                        name="exerciseName"
-                        onChange={(event) =>
-                          handleExerciseFormChange(event, index)
-                        }
-                        value={exerciseField.exerciseName}
-                      />
+              {exerciseData &&
+                Array.from(exerciseData).map((exerciseField, index) => {
+                  return (
+                    <div key={index}>
+                      <div className="center">
+                        <input
+                          className="form-control form-outline w-25"
+                          type="text"
+                          placeholder="Exercise name"
+                          name="exerciseName"
+                          onChange={(event) =>
+                            handleExerciseFormChange(event, index)
+                          }
+                          value={exerciseField.exerciseName}
+                        />
+                      </div>
+                      <div className="center">
+                        <input
+                          className="form-control form-outline w-25"
+                          type="text"
+                          placeholder="Exercise weight"
+                          name="exerciseWeight"
+                          onChange={(event) =>
+                            handleExerciseFormChange(event, index)
+                          }
+                          value={exerciseField.exerciseWeight}
+                        />
+                      </div>
+                      <div className="center">
+                        <input
+                          className="form-control form-outline w-25"
+                          type="text"
+                          placeholder="Exercise sets"
+                          name="exerciseSets"
+                          onChange={(event) =>
+                            handleExerciseFormChange(event, index)
+                          }
+                          value={exerciseField.exerciseSets}
+                        />
+                      </div>
+                      <div className="center">
+                        <input
+                          className="form-control form-outline w-25"
+                          type="text"
+                          placeholder="Exercise reps"
+                          name="exerciseReps"
+                          onChange={(event) =>
+                            handleExerciseFormChange(event, index)
+                          }
+                          value={exerciseField.exerciseReps}
+                        />
+                      </div>
+                      <div className="center">
+                        <button
+                          className="form-control form-outline w-25 btn btn-danger"
+                          onClick={() => deleteExerciseFields(index)}
+                        >
+                          x
+                        </button>
+                      </div>
                     </div>
-                    <div className="center">
-                      <input
-                        className="form-control form-outline w-25"
-                        type="text"
-                        placeholder="Exercise weight"
-                        name="exerciseWeight"
-                        onChange={(event) =>
-                          handleExerciseFormChange(event, index)
-                        }
-                        value={exerciseField.exerciseWeight}
-                      />
-                    </div>
-                    <div className="center">
-                      <input
-                        className="form-control form-outline w-25"
-                        type="text"
-                        placeholder="Exercise sets"
-                        name="exerciseSets"
-                        onChange={(event) =>
-                          handleExerciseFormChange(event, index)
-                        }
-                        value={exerciseField.exerciseSets}
-                      />
-                    </div>
-                    <div className="center">
-                      <input
-                        className="form-control form-outline w-25"
-                        type="text"
-                        placeholder="Exercise reps"
-                        name="exerciseReps"
-                        onChange={(event) =>
-                          handleExerciseFormChange(event, index)
-                        }
-                        value={exerciseField.exerciseReps}
-                      />
-                    </div>
-                    <div className="center">
-                      <button
-                        className="form-control form-outline w-25 btn btn-danger"
-                        onClick={() => deleteExerciseFields(index)}
-                      >
-                        x
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </div>
           <br />
