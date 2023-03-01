@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setWorkouts } from "../../state/index.js";
 import { Link } from "react-router-dom";
 import "./styles.css";
+import moment from "moment";
 
 const WorkoutsPage = () => {
   const [error, setError] = useState("");
@@ -168,7 +169,9 @@ const WorkoutsPage = () => {
             workoutsList.map((workout) => (
               <tbody>
                 <tr key={workout._id} className="center">
-                  <td className="workout-row">{workout.workoutDate}</td>
+                  <td className="workout-row">
+                    {moment(workout.workoutDate).format("DD.MM.YYYY")}
+                  </td>
                   <td className="workout-row">{workout.workoutName}</td>
                   <td className="workout-row">{workout.workoutType}</td>
                   <td className="workout-cell-empty">{workout.workoutType}</td>

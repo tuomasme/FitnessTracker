@@ -126,8 +126,7 @@ const AddWorkout = () => {
           <div className="center">
             <input
               className="form-control form-outline w-25"
-              type="text"
-              placeholder="Workout date"
+              type="date"
               name="workoutDate"
               onChange={handleChange}
               value={workoutData.workoutDate}
