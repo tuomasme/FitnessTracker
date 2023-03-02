@@ -5,7 +5,6 @@ const initialState = {
   token: null,
   workouts: [],
   records: [],
-  exercises: [],
 };
 
 export const authorizationSlice = createSlice({
@@ -44,26 +43,12 @@ export const authorizationSlice = createSlice({
     },
     setRecord: (state, action) => {
       const updatedRecord = state.user.records.map((record) => {
-        if (record._id === action.payload.record._id)
+        if (record._id === action.payload.records._id) {
           return action.payload.record;
+        }
         return record;
       });
       state.user.records = updatedRecord;
-    },
-    setExercises: (state, action) => {
-      if (state.user.workout) {
-        state.user.workout.exercises = action.payload.exercises;
-      } else {
-        console.error("User exercises don't exist");
-      }
-    },
-    setExercise: (state, action) => {
-      const updatedExercise = state.user.workout.exercises.map((exercise) => {
-        if (exercise._id === action.payload.exercise._id)
-          return action.payload.exercise;
-        return exercise;
-      });
-      state.user.workout.exercises = updatedExercise;
     },
   },
 });
@@ -75,7 +60,5 @@ export const {
   setWorkout,
   setRecords,
   setRecord,
-  setExercises,
-  setExercise,
 } = authorizationSlice.actions;
 export default authorizationSlice.reducer;

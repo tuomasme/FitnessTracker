@@ -1,0 +1,11 @@
+.center {
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+}
+
+.logout {
+    display: flex;
+    justify-content: end;
+    font-size: large;
+}

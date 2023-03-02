@@ -12,7 +12,7 @@ const UpdateRecord = () => {
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const params = useParams();
-  const record = useSelector((state) => state.user.record);
+  const record = useSelector((state) => state.user.records);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userId: _id,
@@ -61,7 +61,7 @@ const UpdateRecord = () => {
     }
   };  */
 
-  // TODO: Update the selected record
+  // TODO: Fix redux issue
   const updateRecord = async (e) => {
     console.log(params.id);
     console.log(_id);
@@ -75,11 +75,11 @@ const UpdateRecord = () => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userId: _id, formData }),
+          body: JSON.stringify(formData),
         }
       );
       const updatedRecord = await res.json();
-      dispatch(setRecord({ updatedRecord }));
+      //dispatch(setRecord({ updatedRecord }));
       console.log(updatedRecord);
       navigate("/records");
     } catch (error) {
@@ -114,6 +114,7 @@ const UpdateRecord = () => {
               name="recordWeight"
               onChange={handleChange}
               value={formData.recordWeight}
+              defaultValue={record.recordWeight}
               required
             />
           </div>
