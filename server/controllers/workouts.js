@@ -11,6 +11,15 @@ export const getWorkouts = async (req, res) => {
   }
 };
 
+export const getWorkout = async (req, res) => {
+  try {
+    const workout = await Workout.findOne({ _id: req.params.id });
+    res.status(200).json(workout);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
+
 export const addWorkout = async (req, res) => {
   try {
     const { userId, workoutName, workoutType, workoutDate, workoutExercises } =
@@ -40,7 +49,7 @@ export const deleteWorkout = async (req, res) => {
   }
 };
 
-export const editWorkout = async (req, res) => {
+/* export const editWorkout = async (req, res) => {
   try {
     const editWorkout = await Workout.findByIdAndUpdate(req.params.id, {
       $set: req.body,
@@ -48,5 +57,25 @@ export const editWorkout = async (req, res) => {
     res.status(200).json("Workout updated");
   } catch (error) {
     res.json(404).json({ message: err.message });
+  }
+}; */
+
+export const editWorkout = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { workoutName, workoutType, workoutDate, workoutExercises } =
+      req.body;
+    const editWorkout = await Workout.findByIdAndUpdate(
+      { _id: id },
+      {
+        workoutName,
+        workoutType,
+        workoutDate,
+        workoutExercises,
+      }
+    );
+    res.status(200).json(editWorkout);
+  } catch (error) {
+    res.json(500).json({ message: err.message });
   }
 };

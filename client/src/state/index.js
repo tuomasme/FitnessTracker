@@ -41,11 +41,19 @@ export const authorizationSlice = createSlice({
         console.error("User records don't exist");
       }
     },
-    setRecord: (state, action) => {
+    /*     setRecord: (state, action) => {
       const updatedRecord = state.user.records.map((record) => {
         if (record._id === action.payload.records._id) {
           return action.payload.record;
         }
+        return record;
+      });
+      state.user.records = updatedRecord;
+    }, */
+    setRecord: (state, action) => {
+      const updatedRecord = state.user.records.map((record) => {
+        if (record._id === action.payload.record._id)
+          return action.payload.record;
         return record;
       });
       state.user.records = updatedRecord;

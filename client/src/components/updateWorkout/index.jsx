@@ -39,7 +39,7 @@ const UpdateWorkout = () => {
   // Fetch the workout to be updated from the database
   const getWorkout = async () => {
     const response = await fetch(
-      `http://localhost:5000/workout/${_id}/${params.id}`,
+      `http://localhost:5000/workouts/${_id}/${params.id}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -84,22 +84,28 @@ const UpdateWorkout = () => {
   // Update the workout
   const updateWorkout = async (e) => {
     console.log(params.id);
+    console.log(_id);
+    workoutData.workoutExercises = exerciseData;
     e.preventDefault();
-    const res = await fetch(
-      `http://localhost:5000/workouts/${_id}/${params.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId: loggedInUserId }),
-      }
-    );
-    const updatedWorkout = await res.json();
-    dispatch(setWorkout({ record: updatedWorkout }));
-    console.log(updatedWorkout);
-    navigate("/workouts");
+    try {
+      const res = await fetch(
+        `http://localhost:5000/workouts/${_id}/${params.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(workoutData),
+        }
+      );
+      const updatedWorkout = await res.json();
+      dispatch(setWorkout({ workout: updatedWorkout }));
+      console.log(updatedWorkout);
+      navigate("/workouts");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -134,8 +140,7 @@ const UpdateWorkout = () => {
         <div className="center">
           <input
             className="form-control form-outline w-25"
-            type="text"
-            placeholder="Workout date"
+            type="date"
             name="workoutDate"
             onChange={handleWorkoutFormChange}
             value={workoutData.workoutDate}

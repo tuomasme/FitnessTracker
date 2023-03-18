@@ -9,5 +9,4 @@
 
 TODO:
 
-- update records and workouts (update records implemented with redux issue)
 - filter user's workouts by name and type (autocomplete input and select element implemented)

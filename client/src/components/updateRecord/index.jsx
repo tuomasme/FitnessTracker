@@ -61,7 +61,6 @@ const UpdateRecord = () => {
     }
   };  */
 
-  // TODO: Fix redux issue
   const updateRecord = async (e) => {
     console.log(params.id);
     console.log(_id);
@@ -79,7 +78,7 @@ const UpdateRecord = () => {
         }
       );
       const updatedRecord = await res.json();
-      //dispatch(setRecord({ updatedRecord }));
+      dispatch(setRecord({ record: updatedRecord }));
       console.log(updatedRecord);
       navigate("/records");
     } catch (error) {

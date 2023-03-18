@@ -3,6 +3,7 @@ import {
   addWorkout,
   deleteWorkout,
   editWorkout,
+  getWorkout,
   getWorkouts,
 } from "../controllers/workouts.js";
 import { verifyToken } from "../middleware/authorization.js";
@@ -11,6 +12,9 @@ const router = express.Router();
 
 // Fetch workouts of one user
 router.get("/:userId/", verifyToken, getWorkouts);
+
+// Fetch one workout of the user
+router.get("/:userid/:id", verifyToken, getWorkout);
 
 // Add a workout
 router.post("/:userId/", verifyToken, addWorkout);
