@@ -2,7 +2,6 @@ import NavBar from "../navbar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setRecord } from "../../state/index.js";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
 
@@ -12,8 +11,8 @@ const UpdateRecord = () => {
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const params = useParams();
-  const record = useSelector((state) => state.user.records);
   const navigate = useNavigate();
+  const [recordData, setRecordData] = useState([]);
   const [formData, setFormData] = useState({
     userId: _id,
     recordName: "",
@@ -22,15 +21,21 @@ const UpdateRecord = () => {
 
   // Fetch data about the record to be updated
   const getRecord = async () => {
-    const response = await fetch(
-      `http://localhost:5000/records/${_id}/${params.id}`,
-      {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    const data = await response.json();
-    dispatch(setRecord({ record: data }));
+    try {
+      let response = await fetch(
+        `http://localhost:5000/records/${_id}/${params.id}`,
+        {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      let result = await response.json();
+      setRecordData(result);
+      console.log(" Result: ", result);
+      console.log(" RecordData: ", recordData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -40,26 +45,6 @@ const UpdateRecord = () => {
   const handleChange = ({ currentTarget: input }) => {
     setFormData({ ...formData, [input.name]: input.value });
   };
-  /* 
-    const updateRecord = async (e) => {
-    e.preventDefault();
-    try {
-      let res = await axios.put(
-        `http://localhost:5000/records/${_id}/${params.id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      dispatch(
-        setRecord({
-          record: res.data,
-        })
-      );
-    } catch (error) {
-      setError(error.res.data.message);
-      console.log(error);
-    }
-  };  */
 
   const updateRecord = async (e) => {
     console.log(params.id);
@@ -102,6 +87,7 @@ const UpdateRecord = () => {
               name="recordName"
               onChange={handleChange}
               value={formData.recordName}
+              defaultValue={recordData.recordName}
               required
             />
           </div>
@@ -113,7 +99,7 @@ const UpdateRecord = () => {
               name="recordWeight"
               onChange={handleChange}
               value={formData.recordWeight}
-              defaultValue={record.recordWeight}
+              defaultValue={recordData.recordWeight}
               required
             />
           </div>

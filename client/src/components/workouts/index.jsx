@@ -17,8 +17,7 @@ const WorkoutsPage = () => {
   const [searchValue, setSearchValue] = useState("");
   const [workoutsList, setWorkoutsList] = useState([]);
   const [weightUnit, setWeightUnit] = useState("kg");
-  const [typeFilterText, updateTypeFilterText] = useState("");
-  const [typeValueSelected, setTypeValueSelected] = useState("");
+  const [selectValue, setSelectValue] = useState("");
 
   // Fetch workouts from the database
   const getWorkouts = async () => {
@@ -71,7 +70,7 @@ const WorkoutsPage = () => {
   };
 
   // Set autocomplete search value on change
-  const onChange = (event) => {
+  const onSearchValueChange = (event) => {
     setSearchValue(event.target.value);
   };
 
@@ -81,14 +80,8 @@ const WorkoutsPage = () => {
     console.log(searchTerm);
   };
 
-  // Workout type filter value changed
-  const onTypeValueChanged = (event) => {
-    onTypeValueSelected(event.target.value);
-  };
-
-  // Workout type filter value selected
-  const onTypeValueSelected = (typeValue) => {
-    updateTypeFilterText(typeValue);
+  const onSelectValueChange = (event) => {
+    setSelectValue(event.target.value);
   };
 
   return (
@@ -104,18 +97,11 @@ const WorkoutsPage = () => {
           <input
             className="form-control form-outline w-50"
             type="text"
-            placeholder="Search for workouts"
+            placeholder="Search by workout name"
             name="searchWorkoutName"
             value={searchValue}
-            onChange={onChange}
+            onChange={onSearchValueChange}
           />
-          <button
-            className="form-control btn btn-primary form-outline w-25"
-            type="submit"
-            onClick={() => onSearch(searchValue)}
-          >
-            Search
-          </button>
         </div>
         <div className="dropdown form-outline w-50 center">
           {workouts
@@ -142,10 +128,9 @@ const WorkoutsPage = () => {
       <form className="row center">
         <select
           className="form-control form-outline w-50"
-          onChange={onTypeValueChanged}
-          setTypeValueSelected={onTypeValueSelected}
+          onChange={onSelectValueChange}
         >
-          <option defaultValue="">Filter by workout type</option>
+          <option value="">Filter by workout type</option>
           {Array.from(
             new Set(workouts.map((workout) => workout.workoutType))
           ).map((workoutType) => {
@@ -166,62 +151,79 @@ const WorkoutsPage = () => {
             </tr>
           </thead>
           {workoutsList &&
-            workoutsList.map((workout) => (
-              <tbody>
-                <tr key={workout._id} className="center">
-                  <td className="workout-row">
-                    {moment(workout.workoutDate).format("DD.MM.YYYY")}
-                  </td>
-                  <td className="workout-row">{workout.workoutName}</td>
-                  <td className="workout-row">{workout.workoutType}</td>
-                  <td className="workout-cell-empty">{workout.workoutType}</td>
-                  <td className="workout-row-button">
-                    <Link to={"/updateworkout/" + workout._id}>
+            workoutsList
+              .filter((workout) => {
+                return searchValue.toLowerCase() === ""
+                  ? workout
+                  : workout.workoutName.toLowerCase().startsWith(searchValue);
+              })
+              .filter((workout) => {
+                return selectValue.toLowerCase() === ""
+                  ? workout
+                  : workout.workoutType.toLowerCase().includes(selectValue);
+              })
+              .map((workout) => (
+                <tbody>
+                  <tr key={workout._id} className="center">
+                    <td className="workout-row">
+                      {moment(workout.workoutDate).format("DD.MM.YYYY")}
+                    </td>
+                    <td className="workout-row">{workout.workoutName}</td>
+                    <td className="workout-row">{workout.workoutType}</td>
+                    <td className="workout-cell-empty"></td>
+                    <td className="workout-row-button">
+                      <Link to={"/updateworkout/" + workout._id}>
+                        <button
+                          className="btn btn-warning btn-sm"
+                          style={{ padding: "10px 10px" }}
+                        >
+                          Update
+                        </button>
+                      </Link>
+                    </td>
+                    <td className="workout-row">
                       <button
-                        className="btn btn-warning btn-sm"
+                        className="btn btn-danger btn-sm"
                         style={{ padding: "10px 10px" }}
+                        onClick={() => {
+                          deleteWorkout(workout._id);
+                        }}
                       >
-                        Update
+                        Delete
                       </button>
-                    </Link>
-                  </td>
-                  <td className="workout-row">
-                    <button
-                      className="btn btn-danger btn-sm"
-                      style={{ padding: "10px 10px" }}
-                      onClick={() => {
-                        deleteWorkout(workout._id);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-                <tr className="center">
-                  <th className="exercise-cell-first-empty "></th>
-                  <th className="exercise-header">Name</th>
-                  <th className="exercise-header">Sets</th>
-                  <th className="exercise-header">Weight</th>
-                  <th className="exercise-header">Reps</th>
-                  <th className="exercise-header"></th>
-                  <th className="exercise-header"></th>
-                </tr>
-                {workout.workoutExercises &&
-                  workout.workoutExercises.map((exercise) => (
-                    <tr key={exercise.exerciseName} className="center">
-                      <td className="exercise-cell-first-empty"></td>
-                      <td className="exercise-row">{exercise.exerciseName}</td>
-                      <td className="exercise-row">{exercise.exerciseSets}</td>
-                      <td className="exercise-row">
-                        {exercise.exerciseWeight} {weightUnit}
-                      </td>
-                      <td className="exercise-row">{exercise.exerciseReps}</td>
-                      <td className="exercise-cell-empty"></td>
-                      <td className="exercise-cell-empty"></td>
-                    </tr>
-                  ))}
-              </tbody>
-            ))}
+                    </td>
+                  </tr>
+                  <tr className="center">
+                    <th className="exercise-cell-first-empty "></th>
+                    <th className="exercise-header">Name</th>
+                    <th className="exercise-header">Sets</th>
+                    <th className="exercise-header">Weight</th>
+                    <th className="exercise-header">Reps</th>
+                    <th className="exercise-header"></th>
+                    <th className="exercise-header"></th>
+                  </tr>
+                  {workout.workoutExercises &&
+                    workout.workoutExercises.map((exercise) => (
+                      <tr key={exercise.exerciseName} className="center">
+                        <td className="exercise-cell-first-empty"></td>
+                        <td className="exercise-row">
+                          {exercise.exerciseName}
+                        </td>
+                        <td className="exercise-row">
+                          {exercise.exerciseSets}
+                        </td>
+                        <td className="exercise-row">
+                          {exercise.exerciseWeight} {weightUnit}
+                        </td>
+                        <td className="exercise-row">
+                          {exercise.exerciseReps}
+                        </td>
+                        <td className="exercise-cell-empty"></td>
+                        <td className="exercise-cell-empty"></td>
+                      </tr>
+                    ))}
+                </tbody>
+              ))}
         </table>
       </form>
     </div>

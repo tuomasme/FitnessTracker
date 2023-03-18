@@ -2,7 +2,6 @@ import NavBar from "../navbar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setWorkout } from "../../state/index.js";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
 
@@ -12,8 +11,6 @@ const UpdateWorkout = () => {
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const params = useParams();
-  const workout = useSelector((state) => state.user.workout);
-  const loggedInUserId = useSelector((state) => state.user._id);
   const navigate = useNavigate();
 
   // Data fields of exercises of the workout

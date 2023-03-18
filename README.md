@@ -6,7 +6,3 @@
 - add, delete and update their workouts
 - fetch their records from the database
 - add, delete and update their records
-
-TODO:
-
-- filter user's workouts by name and type (autocomplete input and select element implemented)
