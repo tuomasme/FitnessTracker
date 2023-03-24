@@ -8,6 +8,24 @@ import { Link } from "react-router-dom";
 import "./styles.css";
 
 const RecordsPage = () => {
+  return (
+    <div>
+      <NavBar />
+      <HeaderComponent />
+      <FormComponent />
+    </div>
+  );
+};
+
+const HeaderComponent = () => {
+  return (
+    <div className="center margin-header">
+      <h1>Records</h1>
+    </div>
+  );
+};
+
+const FormComponent = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { _id } = useSelector((state) => state.user);
@@ -68,6 +86,11 @@ const RecordsPage = () => {
       );
       setRecordsList(Array.from(res.data));
       console.log("After post: ", recordsList);
+      setFormData({
+        userId: _id,
+        recordName: "",
+        recordWeight: "",
+      });
       getRecords();
     } catch (error) {
       setError(error.res.data.message);
@@ -95,12 +118,9 @@ const RecordsPage = () => {
 
   return (
     <div>
-      <h1 className="center">Records</h1>
-      <NavBar />
-
       <div>
         <form onSubmit={handleSubmit}>
-          <div className="center">
+          <div className="center margin">
             <input
               className="form-control form-outline w-25"
               type="text"
@@ -111,7 +131,7 @@ const RecordsPage = () => {
               required
             />
           </div>
-          <div className="center">
+          <div className="center margin">
             <input
               className="form-control form-outline w-25"
               type="text"
@@ -122,8 +142,8 @@ const RecordsPage = () => {
               required
             />
           </div>
-          {error && <div className="center">{error}</div>}
-          <div className="center">
+          {error && <div className="center margin">{error}</div>}
+          <div className="center margin">
             <button
               className="form-control btn btn-success form-outline w-25"
               type="submit"
@@ -133,36 +153,33 @@ const RecordsPage = () => {
           </div>
         </form>
       </div>
-      <div>
-        {recordsList &&
-          recordsList.map((record) => (
-            <table key={record._id} className="center">
+      <div className="margin-header center">
+        <table
+          className="table table-light form-outline"
+          style={{ width: "35%" }}
+        >
+          <thead>
+            <tr>
+              <th scope="col">Exercise</th>
+              <th scope="col">Weight</th>
+              <th scope="col">&nbsp;</th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+          {recordsList &&
+            recordsList.map((record) => (
               <tbody>
-                <tr>
-                  <td
-                    style={{
-                      fontSize: "24px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  >
-                    {record.recordName}
-                  </td>
-                  <td
-                    style={{
-                      fontSize: "24px",
-                      padding: "10px 10px",
-                      width: "150px",
-                    }}
-                  >
+                <tr key={record._id}>
+                  <td className="table-cell">{record.recordName}</td>
+                  <td className="table-cell">
                     {record.recordWeight} {weightUnit}
                   </td>
-                  <td>
+                  <td className="table-cell">
                     <Link to={"/updaterecord/" + record._id}>
                       <button className="btn btn-warning btn-sm">Update</button>
                     </Link>
                   </td>
-                  <td>
+                  <td className="table-cell">
                     <button
                       className="btn btn-danger btn-sm"
                       onClick={() => {
@@ -174,8 +191,8 @@ const RecordsPage = () => {
                   </td>
                 </tr>
               </tbody>
-            </table>
-          ))}
+            ))}
+        </table>
       </div>
     </div>
   );

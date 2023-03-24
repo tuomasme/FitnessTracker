@@ -6,6 +6,24 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
 
 const UpdateRecord = () => {
+  return (
+    <div>
+      <NavBar />
+      <HeaderComponent />
+      <FormComponent />
+    </div>
+  );
+};
+
+const HeaderComponent = () => {
+  return (
+    <div className="center margin-header">
+      <h1>Update record</h1>
+    </div>
+  );
+};
+
+const FormComponent = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { _id } = useSelector((state) => state.user);
@@ -30,7 +48,7 @@ const UpdateRecord = () => {
         }
       );
       let result = await response.json();
-      setRecordData(result);
+      setRecordData(Array.from(result));
       console.log(" Result: ", result);
       console.log(" RecordData: ", recordData);
     } catch (error) {
@@ -70,50 +88,43 @@ const UpdateRecord = () => {
       console.log(error);
     }
   };
-
   return (
     <div>
-      <div>
-        <h1 className="center">Update record</h1>
-        <NavBar />
-      </div>
-      <div>
-        <form onSubmit={updateRecord}>
-          <div className="center">
-            <input
-              className="form-control form-outline w-25"
-              type="text"
-              placeholder="Record name"
-              name="recordName"
-              onChange={handleChange}
-              value={formData.recordName}
-              defaultValue={recordData.recordName}
-              required
-            />
-          </div>
-          <div className="center">
-            <input
-              className="form-control form-outline w-25"
-              type="text"
-              placeholder="Record weight"
-              name="recordWeight"
-              onChange={handleChange}
-              value={formData.recordWeight}
-              defaultValue={recordData.recordWeight}
-              required
-            />
-          </div>
-          {error && <div className="center">{error}</div>}
-          <div className="center">
-            <button
-              className="form-control btn btn-warning form-outline w-25"
-              type="submit"
-            >
-              Update record
-            </button>
-          </div>
-        </form>
-      </div>
+      <form onSubmit={updateRecord}>
+        <div className="center margin">
+          <input
+            className="form-control form-outline w-25"
+            type="text"
+            placeholder="Record name"
+            name="recordName"
+            onChange={handleChange}
+            value={formData.recordName}
+            defaultValue={recordData.recordName}
+            required
+          />
+        </div>
+        <div className="center margin">
+          <input
+            className="form-control form-outline w-25"
+            type="text"
+            placeholder="Record weight"
+            name="recordWeight"
+            onChange={handleChange}
+            value={formData.recordWeight}
+            defaultValue={recordData.recordWeight}
+            required
+          />
+        </div>
+        {error && <div className="center">{error}</div>}
+        <div className="center margin">
+          <button
+            className="form-control btn btn-warning form-outline w-25"
+            type="submit"
+          >
+            Update record
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

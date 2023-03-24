@@ -9,6 +9,24 @@ import "./styles.css";
 import moment from "moment";
 
 const WorkoutsPage = () => {
+  return (
+    <div>
+      <NavBar />
+      <HeaderComponent />
+      <FormComponent />
+    </div>
+  );
+};
+
+const HeaderComponent = () => {
+  return (
+    <div className="center margin-header">
+      <h1>Workouts</h1>
+    </div>
+  );
+};
+
+const FormComponent = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { _id } = useSelector((state) => state.user);
@@ -80,22 +98,16 @@ const WorkoutsPage = () => {
     console.log(searchTerm);
   };
 
+  // Set select input value
   const onSelectValueChange = (event) => {
     setSelectValue(event.target.value);
   };
-
   return (
-    <div className="container">
-      <div className="row">
-        <h1 className="center">Workouts</h1>
-      </div>
-      <div className="row">
-        <NavBar />
-      </div>
-      <form className="row" onSubmit={submitHandler}>
-        <div className=" search-inner center">
+    <div>
+      <form onSubmit={submitHandler}>
+        <div className=" search-inner center margin-search-bar">
           <input
-            className="form-control form-outline w-50"
+            className="form-control form-outline w-25"
             type="text"
             placeholder="Search by workout name"
             name="searchWorkoutName"
@@ -103,31 +115,40 @@ const WorkoutsPage = () => {
             onChange={onSearchValueChange}
           />
         </div>
-        <div className="dropdown form-outline w-50 center">
-          {workouts
-            .filter((workout) => {
-              const searchTerm = searchValue.toLowerCase();
-              const name = workout.workoutName.toLowerCase();
+        <div className="center">
+          <div className="dropdown form-outline w-25">
+            {workouts
+              .filter((workout) => {
+                const searchTerm = searchValue.toLowerCase();
+                const name = workout.workoutName.toLowerCase();
 
-              return (
-                searchTerm && name.startsWith(searchTerm) && name !== searchTerm
-              );
-            })
-            .slice(0, 10)
-            .map((workout) => (
-              <div
-                className="dropdown-row"
-                onClick={() => onSearch(workout.workoutName)}
-                key={workout._id}
-              >
-                {workout.workoutName}
-              </div>
-            ))}
+                return (
+                  searchTerm &&
+                  name.startsWith(searchTerm) &&
+                  name !== searchTerm
+                );
+              })
+              .filter((workout) => {
+                return selectValue.toLowerCase() === ""
+                  ? workout
+                  : workout.workoutType.toLowerCase().includes(selectValue);
+              })
+              .slice(0, 10)
+              .map((workout) => (
+                <div
+                  className="dropdown-row"
+                  onClick={() => onSearch(workout.workoutName)}
+                  key={workout._id}
+                >
+                  {workout.workoutName}
+                </div>
+              ))}
+          </div>
         </div>
       </form>
-      <form className="row center">
+      <form className="center">
         <select
-          className="form-control form-outline w-50"
+          className="form-control form-select form-outline w-25 margin"
           onChange={onSelectValueChange}
         >
           <option value="">Filter by workout type</option>
@@ -138,94 +159,93 @@ const WorkoutsPage = () => {
           })}
         </select>
       </form>
-      <form className="center">
-        <table>
-          <thead>
-            <tr className="center">
-              <th className="workout-header"></th>
-              <th className="workout-header">Name</th>
-              <th className="workout-header">Type</th>
-              <th className="workout-header"></th>
-              <th className="workout-header"></th>
-              <th className="workout-header"></th>
-            </tr>
-          </thead>
-          {workoutsList &&
-            workoutsList
-              .filter((workout) => {
-                return searchValue.toLowerCase() === ""
-                  ? workout
-                  : workout.workoutName.toLowerCase().startsWith(searchValue);
-              })
-              .filter((workout) => {
-                return selectValue.toLowerCase() === ""
-                  ? workout
-                  : workout.workoutType.toLowerCase().includes(selectValue);
-              })
-              .map((workout) => (
-                <tbody>
-                  <tr key={workout._id} className="center">
-                    <td className="workout-row">
-                      {moment(workout.workoutDate).format("DD.MM.YYYY")}
-                    </td>
-                    <td className="workout-row">{workout.workoutName}</td>
-                    <td className="workout-row">{workout.workoutType}</td>
-                    <td className="workout-cell-empty"></td>
-                    <td className="workout-row-button">
-                      <Link to={"/updateworkout/" + workout._id}>
+      <div className="center margin">
+        <form>
+          <table className="table table-light">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            {workoutsList &&
+              workoutsList
+                .filter((workout) => {
+                  return searchValue.toLowerCase() === ""
+                    ? workout
+                    : workout.workoutName.toLowerCase().startsWith(searchValue);
+                })
+                .filter((workout) => {
+                  return selectValue.toLowerCase() === ""
+                    ? workout
+                    : workout.workoutType.toLowerCase().includes(selectValue);
+                })
+                .map((workout) => (
+                  <tbody>
+                    <tr key={workout._id}>
+                      <td>
+                        {moment(workout.workoutDate).format("DD.MM.YYYY")}
+                      </td>
+                      <td>{workout.workoutName}</td>
+                      <td colspan="3">{workout.workoutType}</td>
+                      <td>
+                        <Link to={"/updateworkout/" + workout._id}>
+                          <button
+                            className="btn btn-warning btn-sm"
+                            style={{ padding: "10px 10px" }}
+                          >
+                            Edit workout
+                          </button>
+                        </Link>
+                      </td>
+                      <td>
                         <button
-                          className="btn btn-warning btn-sm"
+                          className="btn btn-danger btn-sm"
                           style={{ padding: "10px 10px" }}
+                          onClick={() => {
+                            deleteWorkout(workout._id);
+                          }}
                         >
-                          Update
+                          Delete workout
                         </button>
-                      </Link>
-                    </td>
-                    <td className="workout-row">
-                      <button
-                        className="btn btn-danger btn-sm"
-                        style={{ padding: "10px 10px" }}
-                        onClick={() => {
-                          deleteWorkout(workout._id);
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="center">
-                    <th className="exercise-cell-first-empty "></th>
-                    <th className="exercise-header">Name</th>
-                    <th className="exercise-header">Sets</th>
-                    <th className="exercise-header">Weight</th>
-                    <th className="exercise-header">Reps</th>
-                    <th className="exercise-header"></th>
-                    <th className="exercise-header"></th>
-                  </tr>
-                  {workout.workoutExercises &&
-                    workout.workoutExercises.map((exercise) => (
-                      <tr key={exercise.exerciseName} className="center">
-                        <td className="exercise-cell-first-empty"></td>
-                        <td className="exercise-row">
-                          {exercise.exerciseName}
-                        </td>
-                        <td className="exercise-row">
-                          {exercise.exerciseSets}
-                        </td>
-                        <td className="exercise-row">
-                          {exercise.exerciseWeight} {weightUnit}
-                        </td>
-                        <td className="exercise-row">
-                          {exercise.exerciseReps}
-                        </td>
-                        <td className="exercise-cell-empty"></td>
-                        <td className="exercise-cell-empty"></td>
-                      </tr>
-                    ))}
-                </tbody>
-              ))}
-        </table>
-      </form>
+                      </td>
+                    </tr>
+                    <tr className="exercise-header">
+                      <th scope="col">&nbsp;</th>
+                      <th scope="col">Exercise</th>
+                      <th scope="col">Sets</th>
+                      <th scope="col">Weight</th>
+                      <th scope="col">Reps</th>
+                      <th scope="col">&nbsp;</th>
+                      <th scope="col">&nbsp;</th>
+                    </tr>
+                    {workout.workoutExercises &&
+                      workout.workoutExercises.map((exercise) => (
+                        <tr
+                          key={exercise.exerciseName}
+                          className="exercise-content"
+                        >
+                          <td></td>
+                          <td>{exercise.exerciseName}</td>
+                          <td>{exercise.exerciseSets}</td>
+                          <td>
+                            {exercise.exerciseWeight} {weightUnit}
+                          </td>
+                          <td>{exercise.exerciseReps}</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                ))}
+          </table>
+        </form>
+      </div>
     </div>
   );
 };

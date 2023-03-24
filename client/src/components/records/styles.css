@@ -2,3 +2,19 @@
     display: flex;
     justify-content: center;
 }
+
+.margin-header {
+    margin: 2%;
+}
+
+.margin {
+    margin: 0.5%;
+}
+
+.table-width{
+    width: 50%;
+}
+
+.table-cell{
+    font-size: large;
+}

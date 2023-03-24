@@ -7,6 +7,43 @@ import { setLogin } from "../../state/index.js";
 import "./styles.css";
 
 const Login = () => {
+  return (
+    <div>
+      <div
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "15%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <HeaderComponent />
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "40%",
+          transform: "translate(-50%, -50%)",
+          width: "40%",
+        }}
+      >
+        <FormComponent />
+        <LinkComponent />
+      </div>
+    </div>
+  );
+};
+
+const HeaderComponent = () => {
+  return (
+    <div>
+      <h1>Login to Fitness Tracker</h1>
+    </div>
+  );
+};
+
+const FormComponent = () => {
   const [data, setData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -35,55 +72,51 @@ const Login = () => {
       console.log(error);
     }
   };
-
   return (
-    <div className="h-100">
-      <div>
-        <div>
-          <h1 className="center">Login</h1>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div className="form-margin">
+          <input
+            className="form-control form-outline"
+            type="text"
+            placeholder="Username"
+            name="username"
+            onChange={handleChange}
+            value={data.username}
+            required
+          />
         </div>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <div className="center">
-              <input
-                className="form-control form-outline w-25"
-                type="text"
-                placeholder="Username"
-                name="username"
-                onChange={handleChange}
-                value={data.username}
-                required
-              />
-            </div>
-            <div className="center">
-              <input
-                className="form-control form-outline w-25"
-                type="password"
-                placeholder="Password"
-                name="password"
-                onChange={handleChange}
-                value={data.password}
-                required
-              />
-            </div>
-            {error && <div className="center">{error}</div>}
-            <div className="center">
-              <button
-                className="form-control form-outline w-25 btn btn-primary"
-                type="submit"
-              >
-                Login
-              </button>
-            </div>
-          </form>
+        <div className="form-margin">
+          <input
+            className="form-control form-outline"
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={handleChange}
+            value={data.password}
+            required
+          />
         </div>
-      </div>
-      <br />
-      <div className="center">
-        <Link to="/register">
-          <div type="button">Don't have an account? Sign Up here.</div>
-        </Link>
-      </div>
+        {error && <div className="form-margin">{error}</div>}
+        <div className="form-margin">
+          <button
+            className="form-control form-outline btn btn-primary"
+            type="submit"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+const LinkComponent = () => {
+  return (
+    <div className="form-margin">
+      <Link to="/register">
+        <div type="button">Don't have an account? Sign Up here.</div>
+      </Link>
     </div>
   );
 };

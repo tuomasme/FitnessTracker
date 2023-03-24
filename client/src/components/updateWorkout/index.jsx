@@ -6,6 +6,24 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
 
 const UpdateWorkout = () => {
+  return (
+    <div>
+      <NavBar />
+      <HeaderComponent />
+      <FormComponent />
+    </div>
+  );
+};
+
+const HeaderComponent = () => {
+  return (
+    <div className="center margin-header">
+      <h1>Update workout</h1>
+    </div>
+  );
+};
+
+const FormComponent = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { _id } = useSelector((state) => state.user);
@@ -107,12 +125,8 @@ const UpdateWorkout = () => {
 
   return (
     <div>
-      <div>
-        <h1 className="center">Update workout</h1>
-        <NavBar />
-      </div>
       <form onSubmit={updateWorkout}>
-        <div className="center">
+        <div className="center margin">
           <input
             className="form-control form-outline w-25"
             type="text"
@@ -123,7 +137,7 @@ const UpdateWorkout = () => {
             required
           />
         </div>
-        <div className="center">
+        <div className="center margin">
           <input
             className="form-control form-outline w-25"
             type="text"
@@ -134,7 +148,7 @@ const UpdateWorkout = () => {
             required
           />
         </div>
-        <div className="center">
+        <div className="center margin">
           <input
             className="form-control form-outline w-25"
             type="date"
@@ -145,12 +159,11 @@ const UpdateWorkout = () => {
           />
         </div>
         <div>
-          <br />
           <div>
             {Array.from(exerciseData).map((exerciseField, index) => {
               return (
                 <div key={index}>
-                  <div className="center">
+                  <div className="center margin-workouts-exercises">
                     <input
                       className="form-control form-outline w-25"
                       type="text"
@@ -162,7 +175,7 @@ const UpdateWorkout = () => {
                       value={exerciseField.exerciseName}
                     />
                   </div>
-                  <div className="center">
+                  <div className="center margin">
                     <input
                       className="form-control form-outline w-25"
                       type="text"
@@ -174,7 +187,7 @@ const UpdateWorkout = () => {
                       value={exerciseField.exerciseWeight}
                     />
                   </div>
-                  <div className="center">
+                  <div className="center margin">
                     <input
                       className="form-control form-outline w-25"
                       type="text"
@@ -186,7 +199,7 @@ const UpdateWorkout = () => {
                       value={exerciseField.exerciseSets}
                     />
                   </div>
-                  <div className="center">
+                  <div className="center margin">
                     <input
                       className="form-control form-outline w-25"
                       type="text"
@@ -198,7 +211,7 @@ const UpdateWorkout = () => {
                       value={exerciseField.exerciseReps}
                     />
                   </div>
-                  <div className="center">
+                  <div className="center margin">
                     <button
                       className="form-control form-outline w-25 btn btn-danger"
                       onClick={() => deleteExerciseFields(index)}
@@ -211,7 +224,7 @@ const UpdateWorkout = () => {
             })}
           </div>
         </div>
-        <div className="center">
+        <div className="center margin">
           <button
             className="form-control form-outline w-25 btn btn-primary"
             onClick={addExerciseFields}
@@ -219,10 +232,10 @@ const UpdateWorkout = () => {
             Add exercise
           </button>
         </div>
-        {error && <div className="center">{error}</div>}
-        <div className="center">
+        {error && <div className="center margin">{error}</div>}
+        <div className="center margin-update-button">
           <button
-            className="form-control btn btn-warning form-outline w-25"
+            className="form-control btn btn-lg btn-warning form-outline w-25"
             type="submit"
           >
             Update workout

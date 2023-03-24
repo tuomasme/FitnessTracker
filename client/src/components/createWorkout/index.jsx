@@ -6,7 +6,25 @@ import { setWorkouts } from "../../state/index.js";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
-const AddWorkout = () => {
+const CreateWorkout = () => {
+  return (
+    <div>
+      <NavBar />
+      <HeaderComponent />
+      <FormComponent />
+    </div>
+  );
+};
+
+const HeaderComponent = () => {
+  return (
+    <div className="center margin-header">
+      <h1>New workout</h1>
+    </div>
+  );
+};
+
+const FormComponent = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { _id } = useSelector((state) => state.user);
@@ -91,17 +109,10 @@ const AddWorkout = () => {
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <h1 className="center">New workout</h1>
-      </div>
-      <div className="row">
-        <NavBar />
-      </div>
-
-      <div className="row">
+    <div>
+      <div>
         <form onSubmit={submitHandler}>
-          <div className="center">
+          <div className="center margin">
             <input
               className="form-control form-outline w-25"
               type="text"
@@ -112,7 +123,7 @@ const AddWorkout = () => {
               required
             />
           </div>
-          <div className="center">
+          <div className="center margin">
             <input
               className="form-control form-outline w-25"
               type="text"
@@ -123,7 +134,7 @@ const AddWorkout = () => {
               required
             />
           </div>
-          <div className="center">
+          <div className="center margin">
             <input
               className="form-control form-outline w-25"
               type="date"
@@ -133,14 +144,13 @@ const AddWorkout = () => {
               required
             />
           </div>
-          <div>
-            <br />
+          <div className="margin-workouts-exercises">
             <div>
               {exerciseData &&
                 Array.from(exerciseData).map((exerciseField, index) => {
                   return (
                     <div key={index}>
-                      <div className="center">
+                      <div className="center margin">
                         <input
                           className="form-control form-outline w-25"
                           type="text"
@@ -152,7 +162,7 @@ const AddWorkout = () => {
                           value={exerciseField.exerciseName}
                         />
                       </div>
-                      <div className="center">
+                      <div className="center margin">
                         <input
                           className="form-control form-outline w-25"
                           type="text"
@@ -164,7 +174,7 @@ const AddWorkout = () => {
                           value={exerciseField.exerciseWeight}
                         />
                       </div>
-                      <div className="center">
+                      <div className="center margin">
                         <input
                           className="form-control form-outline w-25"
                           type="text"
@@ -176,7 +186,7 @@ const AddWorkout = () => {
                           value={exerciseField.exerciseSets}
                         />
                       </div>
-                      <div className="center">
+                      <div className="center margin">
                         <input
                           className="form-control form-outline w-25"
                           type="text"
@@ -188,7 +198,7 @@ const AddWorkout = () => {
                           value={exerciseField.exerciseReps}
                         />
                       </div>
-                      <div className="center">
+                      <div className="center margin">
                         <button
                           className="form-control form-outline w-25 btn btn-danger"
                           onClick={() => deleteExerciseFields(index)}
@@ -201,20 +211,18 @@ const AddWorkout = () => {
                 })}
             </div>
           </div>
-          <br />
           <div className="center">
             <button
               className="form-control form-outline w-25 btn btn-primary"
               onClick={addExerciseFields}
             >
-              Add exercise fields
+              Add exercise
             </button>
           </div>
-          <br />
           {error && <div className="center">{error}</div>}
-          <div className="center">
+          <div className="center margin-create-button">
             <button
-              className="form-control btn btn-success form-outline w-50"
+              className="form-control btn btn-lg btn-success form-outline w-25"
               type="submit"
               onClick={handleSubmit}
             >
@@ -227,4 +235,4 @@ const AddWorkout = () => {
   );
 };
 
-export default AddWorkout;
+export default CreateWorkout;

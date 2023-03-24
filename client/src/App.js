@@ -9,7 +9,7 @@ import RecordsPage from "./components/records";
 import Login from "./components/login";
 import Register from "./components/register";
 import { useSelector } from "react-redux";
-import AddWorkout from "./components/addWorkout";
+import CreateWorkout from "./components/createWorkout";
 import UpdateRecord from "./components/updateRecord";
 import UpdateWorkout from "./components/updateWorkout";
 
@@ -26,8 +26,8 @@ const App = () => {
             element={isAuthorized ? <WorkoutsPage /> : <Navigate to="/" />}
           />
           <Route
-            path="/addworkout"
-            element={isAuthorized ? <AddWorkout /> : <Navigate to="/" />}
+            path="/createworkout"
+            element={isAuthorized ? <CreateWorkout /> : <Navigate to="/" />}
           />
           <Route
             path="/updateworkout/:id"

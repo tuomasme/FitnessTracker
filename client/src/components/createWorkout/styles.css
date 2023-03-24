@@ -7,15 +7,15 @@
     margin: 2%;
 }
 
-.margin {
-    margin: 0.5%;
-}
-
 .margin-workouts-exercises {
     margin-top: 1%;
     margin-bottom: 0.5%;
 }
 
-.margin-update-button {
+.margin {
+    margin: 0.5%;
+}
+
+.margin-create-button {
     margin-top: 2%;
 }

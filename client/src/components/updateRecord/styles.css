@@ -2,3 +2,15 @@
     display: flex;
     justify-content: center;
 }
+
+.margin-header {
+    margin: 2%;
+}
+
+.margin {
+    margin: 0.5%;
+}
+
+.margin-update-button {
+    margin-top: 2%;
+}
