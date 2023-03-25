@@ -7,17 +7,17 @@ import { setRecord, setRecords } from "../../state/index.js";
 import { Link } from "react-router-dom";
 import "./styles.css";
 
-const RecordsPage = () => {
+const Records = () => {
   return (
     <div>
       <NavBar />
-      <HeaderComponent />
-      <FormComponent />
+      <RecordsHeader />
+      <RecordsForm />
     </div>
   );
 };
 
-const HeaderComponent = () => {
+const RecordsHeader = () => {
   return (
     <div className="center margin-header">
       <h1>Records</h1>
@@ -25,7 +25,7 @@ const HeaderComponent = () => {
   );
 };
 
-const FormComponent = () => {
+const RecordsForm = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { _id } = useSelector((state) => state.user);
@@ -134,7 +134,7 @@ const FormComponent = () => {
           <div className="center margin">
             <input
               className="form-control form-outline w-25"
-              type="text"
+              type="number"
               placeholder="Record weight"
               name="recordWeight"
               onChange={handleChange}
@@ -158,14 +158,16 @@ const FormComponent = () => {
           className="table table-light form-outline"
           style={{ width: "35%" }}
         >
-          <thead>
-            <tr>
-              <th scope="col">Exercise</th>
-              <th scope="col">Weight</th>
-              <th scope="col">&nbsp;</th>
-              <th scope="col">&nbsp;</th>
-            </tr>
-          </thead>
+          {recordsList.length > 0 && (
+            <thead>
+              <tr>
+                <th scope="col">Exercise</th>
+                <th scope="col">Weight</th>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">&nbsp;</th>
+              </tr>
+            </thead>
+          )}
           {recordsList &&
             recordsList.map((record) => (
               <tbody>
@@ -176,7 +178,7 @@ const FormComponent = () => {
                   </td>
                   <td className="table-cell">
                     <Link to={"/updaterecord/" + record._id}>
-                      <button className="btn btn-warning btn-sm">Update</button>
+                      <button className="btn btn-warning btn-sm">Edit</button>
                     </Link>
                   </td>
                   <td className="table-cell">
@@ -198,4 +200,4 @@ const FormComponent = () => {
   );
 };
 
-export default RecordsPage;
+export default Records;

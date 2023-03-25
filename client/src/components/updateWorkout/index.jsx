@@ -9,13 +9,13 @@ const UpdateWorkout = () => {
   return (
     <div>
       <NavBar />
-      <HeaderComponent />
-      <FormComponent />
+      <UpdateWorkoutHeader />
+      <UpdateWorkoutForm />
     </div>
   );
 };
 
-const HeaderComponent = () => {
+const UpdateWorkoutHeader = () => {
   return (
     <div className="center margin-header">
       <h1>Update workout</h1>
@@ -23,7 +23,7 @@ const HeaderComponent = () => {
   );
 };
 
-const FormComponent = () => {
+const UpdateWorkoutForm = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { _id } = useSelector((state) => state.user);

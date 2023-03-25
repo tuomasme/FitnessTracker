@@ -4,8 +4,8 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import WorkoutsPage from "./components/workouts";
-import RecordsPage from "./components/records";
+import Workouts from "./components/workouts";
+import Records from "./components/records";
 import Login from "./components/login";
 import Register from "./components/register";
 import { useSelector } from "react-redux";
@@ -23,7 +23,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route
             path="/workouts"
-            element={isAuthorized ? <WorkoutsPage /> : <Navigate to="/" />}
+            element={isAuthorized ? <Workouts /> : <Navigate to="/" />}
           />
           <Route
             path="/createworkout"
@@ -35,7 +35,7 @@ const App = () => {
           />
           <Route
             path="/records"
-            element={isAuthorized ? <RecordsPage /> : <Navigate to="/" />}
+            element={isAuthorized ? <Records /> : <Navigate to="/" />}
           />
           <Route
             path="/updaterecord/:id"

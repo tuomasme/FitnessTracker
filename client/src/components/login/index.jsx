@@ -17,7 +17,7 @@ const Login = () => {
           transform: "translate(-50%, -50%)",
         }}
       >
-        <HeaderComponent />
+        <LoginHeader />
       </div>
       <div
         style={{
@@ -25,17 +25,17 @@ const Login = () => {
           left: "50%",
           top: "40%",
           transform: "translate(-50%, -50%)",
-          width: "40%",
+          width: "35%",
         }}
       >
-        <FormComponent />
-        <LinkComponent />
+        <LoginForm />
+        <LoginLink />
       </div>
     </div>
   );
 };
 
-const HeaderComponent = () => {
+const LoginHeader = () => {
   return (
     <div>
       <h1>Login to Fitness Tracker</h1>
@@ -43,7 +43,7 @@ const HeaderComponent = () => {
   );
 };
 
-const FormComponent = () => {
+const LoginForm = () => {
   const [data, setData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -75,7 +75,57 @@ const FormComponent = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="form-margin">
+        <table>
+          <tr>
+            <td style={{ width: "10%" }}>
+              <label htmlFor="username">Username</label>
+            </td>
+            <td>
+              <input
+                className="form-control form-outline input"
+                type="text"
+                placeholder="Username"
+                name="username"
+                onChange={handleChange}
+                value={data.username}
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style={{ width: "10%" }}>
+              <label htmlFor="password">Password</label>
+            </td>
+            <td>
+              <input
+                className="form-control form-outline input"
+                type="password"
+                placeholder="Password"
+                name="password"
+                onChange={handleChange}
+                value={data.password}
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={2}>
+              {error && <div className="form-margin error-color">{error}</div>}
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>
+              <button
+                className="form-control form-outline btn btn-primary input"
+                type="submit"
+              >
+                Login
+              </button>
+            </td>
+          </tr>
+        </table>
+        {/* <div className="form-margin">
           <input
             className="form-control form-outline"
             type="text"
@@ -97,7 +147,7 @@ const FormComponent = () => {
             required
           />
         </div>
-        {error && <div className="form-margin">{error}</div>}
+        {error && <div className="form-margin error-color">{error}</div>}
         <div className="form-margin">
           <button
             className="form-control form-outline btn btn-primary"
@@ -105,13 +155,13 @@ const FormComponent = () => {
           >
             Login
           </button>
-        </div>
+        </div> */}
       </form>
     </div>
   );
 };
 
-const LinkComponent = () => {
+const LoginLink = () => {
   return (
     <div className="form-margin">
       <Link to="/register">

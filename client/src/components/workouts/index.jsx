@@ -8,17 +8,17 @@ import { Link } from "react-router-dom";
 import "./styles.css";
 import moment from "moment";
 
-const WorkoutsPage = () => {
+const Workouts = () => {
   return (
     <div>
       <NavBar />
-      <HeaderComponent />
-      <FormComponent />
+      <WorkoutsHeader />
+      <WorkoutsForm />
     </div>
   );
 };
 
-const HeaderComponent = () => {
+const WorkoutsHeader = () => {
   return (
     <div className="center margin-header">
       <h1>Workouts</h1>
@@ -26,7 +26,7 @@ const HeaderComponent = () => {
   );
 };
 
-const FormComponent = () => {
+const WorkoutsForm = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { _id } = useSelector((state) => state.user);
@@ -162,17 +162,19 @@ const FormComponent = () => {
       <div className="center margin">
         <form>
           <table className="table table-light">
-            <thead>
-              <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Name</th>
-                <th scope="col">Type</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-              </tr>
-            </thead>
+            {workoutsList.length > 0 && (
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Type</th>
+                  <th>&nbsp;</th>
+                  <th>&nbsp;</th>
+                  <th>&nbsp;</th>
+                  <th>&nbsp;</th>
+                </tr>
+              </thead>
+            )}
             {workoutsList &&
               workoutsList
                 .filter((workout) => {
@@ -250,4 +252,4 @@ const FormComponent = () => {
   );
 };
 
-export default WorkoutsPage;
+export default Workouts;

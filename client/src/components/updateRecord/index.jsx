@@ -9,13 +9,13 @@ const UpdateRecord = () => {
   return (
     <div>
       <NavBar />
-      <HeaderComponent />
-      <FormComponent />
+      <UpdateRecordHeader />
+      <UpdateRecordForm />
     </div>
   );
 };
 
-const HeaderComponent = () => {
+const UpdateRecordHeader = () => {
   return (
     <div className="center margin-header">
       <h1>Update record</h1>
@@ -23,14 +23,13 @@ const HeaderComponent = () => {
   );
 };
 
-const FormComponent = () => {
+const UpdateRecordForm = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const params = useParams();
   const navigate = useNavigate();
-  const [recordData, setRecordData] = useState([]);
   const [formData, setFormData] = useState({
     userId: _id,
     recordName: "",
@@ -48,9 +47,7 @@ const FormComponent = () => {
         }
       );
       let result = await response.json();
-      setRecordData(Array.from(result));
       console.log(" Result: ", result);
-      console.log(" RecordData: ", recordData);
     } catch (error) {
       console.log(error);
     }
@@ -99,7 +96,6 @@ const FormComponent = () => {
             name="recordName"
             onChange={handleChange}
             value={formData.recordName}
-            defaultValue={recordData.recordName}
             required
           />
         </div>
@@ -111,7 +107,6 @@ const FormComponent = () => {
             name="recordWeight"
             onChange={handleChange}
             value={formData.recordWeight}
-            defaultValue={recordData.recordWeight}
             required
           />
         </div>

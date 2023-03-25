@@ -5,6 +5,11 @@ const reqString = {
   required: true,
 };
 
+const reqNumber = {
+  type: Number,
+  required: true,
+};
+
 const WorkoutSchema = new mongoose.Schema({
   userId: reqString,
   workoutName: reqString,
@@ -13,9 +18,9 @@ const WorkoutSchema = new mongoose.Schema({
   workoutExercises: [
     {
       exerciseName: reqString,
-      exerciseSets: reqString,
-      exerciseReps: reqString,
-      exerciseWeight: reqString,
+      exerciseSets: reqNumber,
+      exerciseReps: reqNumber,
+      exerciseWeight: reqNumber,
     },
   ],
 });

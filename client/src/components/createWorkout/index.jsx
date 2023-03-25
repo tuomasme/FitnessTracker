@@ -10,13 +10,13 @@ const CreateWorkout = () => {
   return (
     <div>
       <NavBar />
-      <HeaderComponent />
-      <FormComponent />
+      <CreateWorkoutHeader />
+      <CreateWorkoutForm />
     </div>
   );
 };
 
-const HeaderComponent = () => {
+const CreateWorkoutHeader = () => {
   return (
     <div className="center margin-header">
       <h1>New workout</h1>
@@ -24,7 +24,7 @@ const HeaderComponent = () => {
   );
 };
 
-const FormComponent = () => {
+const CreateWorkoutForm = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { _id } = useSelector((state) => state.user);
@@ -165,7 +165,7 @@ const FormComponent = () => {
                       <div className="center margin">
                         <input
                           className="form-control form-outline w-25"
-                          type="text"
+                          type="number"
                           placeholder="Exercise weight"
                           name="exerciseWeight"
                           onChange={(event) =>
@@ -177,7 +177,7 @@ const FormComponent = () => {
                       <div className="center margin">
                         <input
                           className="form-control form-outline w-25"
-                          type="text"
+                          type="number"
                           placeholder="Exercise sets"
                           name="exerciseSets"
                           onChange={(event) =>
@@ -189,7 +189,7 @@ const FormComponent = () => {
                       <div className="center margin">
                         <input
                           className="form-control form-outline w-25"
-                          type="text"
+                          type="number"
                           placeholder="Exercise reps"
                           name="exerciseReps"
                           onChange={(event) =>

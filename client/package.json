@@ -13,6 +13,7 @@
     "axios": "^1.2.6",
     "bootstrap": "^5.2.3",
     "dotenv": "^16.0.3",
+    "formik": "^2.2.9",
     "install": "^0.13.0",
     "moment": "^2.29.4",
     "npm": "^9.5.1",
@@ -24,7 +25,8 @@
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
     "tar": "^6.1.13",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
