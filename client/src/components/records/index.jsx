@@ -64,6 +64,7 @@ const RecordsForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Handle changes in fields
   const handleChange = ({ currentTarget: input }) => {
     setFormData({ ...formData, [input.name]: input.value });
   };
@@ -98,7 +99,7 @@ const RecordsForm = () => {
     }
   };
 
-  // Delete a record from the database
+  // Delete the selected record from the database
   const deleteRecord = async (id) => {
     try {
       let res = await axios.delete(

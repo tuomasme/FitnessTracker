@@ -51,10 +51,12 @@ const RegisterForm = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Handle change in fields
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
+  // Registration request
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -19,7 +19,7 @@ const CreateWorkout = () => {
 const CreateWorkoutHeader = () => {
   return (
     <div className="center margin-header">
-      <h1>New workout</h1>
+      <h1>Create workout</h1>
     </div>
   );
 };
@@ -30,6 +30,7 @@ const CreateWorkoutForm = () => {
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const navigate = useNavigate();
+  const [workoutsList, setWorkoutsList] = useState([]);
 
   // Data fields of exercises of a workout
   const [exerciseData, setExerciseData] = useState([
@@ -41,7 +42,7 @@ const CreateWorkoutForm = () => {
     },
   ]);
 
-  //Data fields of a workout
+  // Data fields of a workout
   const [workoutData, setWorkoutData] = useState({
     userId: _id,
     workoutName: "",
@@ -50,13 +51,13 @@ const CreateWorkoutForm = () => {
     workoutExercises: [],
   });
 
-  const [workoutsList, setWorkoutsList] = useState([]);
-
-  const handleChange = ({ currentTarget: input }) => {
+  // Handle changes in workout fields
+  const handleWorkoutFieldChange = ({ currentTarget: input }) => {
     setWorkoutData({ ...workoutData, [input.name]: input.value });
   };
 
-  const handleExerciseFormChange = (event, index) => {
+  // Handle changes in exercise fields
+  const handleExerciseFieldChange = (event, index) => {
     let exerciseFormData = [...exerciseData];
     exerciseFormData[index][event.target.name] = event.target.value;
     setExerciseData(exerciseFormData);
@@ -87,6 +88,7 @@ const CreateWorkoutForm = () => {
     }
   };
 
+  // Add fields for one exercise
   const addExerciseFields = (event) => {
     event.preventDefault();
     let exerciseObject = {
@@ -98,12 +100,14 @@ const CreateWorkoutForm = () => {
     setExerciseData([...exerciseData, exerciseObject]);
   };
 
+  // Delete fields of one exercise
   const deleteExerciseFields = (index) => {
     let exerciseFormData = [...exerciseData];
     exerciseFormData.splice(index, 1);
     setExerciseData(exerciseFormData);
   };
 
+  // Prevent default when submitting
   const submitHandler = (event) => {
     event.preventDefault();
   };
@@ -118,7 +122,7 @@ const CreateWorkoutForm = () => {
               type="text"
               placeholder="Workout name"
               name="workoutName"
-              onChange={handleChange}
+              onChange={handleWorkoutFieldChange}
               value={workoutData.workoutName}
               required
             />
@@ -129,7 +133,7 @@ const CreateWorkoutForm = () => {
               type="text"
               placeholder="Workout type"
               name="workoutType"
-              onChange={handleChange}
+              onChange={handleWorkoutFieldChange}
               value={workoutData.workoutType}
               required
             />
@@ -139,7 +143,7 @@ const CreateWorkoutForm = () => {
               className="form-control form-outline w-25"
               type="date"
               name="workoutDate"
-              onChange={handleChange}
+              onChange={handleWorkoutFieldChange}
               value={workoutData.workoutDate}
               required
             />
@@ -157,7 +161,7 @@ const CreateWorkoutForm = () => {
                           placeholder="Exercise name"
                           name="exerciseName"
                           onChange={(event) =>
-                            handleExerciseFormChange(event, index)
+                            handleExerciseFieldChange(event, index)
                           }
                           value={exerciseField.exerciseName}
                         />
@@ -169,7 +173,7 @@ const CreateWorkoutForm = () => {
                           placeholder="Exercise weight"
                           name="exerciseWeight"
                           onChange={(event) =>
-                            handleExerciseFormChange(event, index)
+                            handleExerciseFieldChange(event, index)
                           }
                           value={exerciseField.exerciseWeight}
                         />
@@ -181,7 +185,7 @@ const CreateWorkoutForm = () => {
                           placeholder="Exercise sets"
                           name="exerciseSets"
                           onChange={(event) =>
-                            handleExerciseFormChange(event, index)
+                            handleExerciseFieldChange(event, index)
                           }
                           value={exerciseField.exerciseSets}
                         />
@@ -193,7 +197,7 @@ const CreateWorkoutForm = () => {
                           placeholder="Exercise reps"
                           name="exerciseReps"
                           onChange={(event) =>
-                            handleExerciseFormChange(event, index)
+                            handleExerciseFieldChange(event, index)
                           }
                           value={exerciseField.exerciseReps}
                         />

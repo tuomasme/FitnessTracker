@@ -68,22 +68,26 @@ const UpdateWorkoutForm = () => {
     getWorkout();
   }, []);
 
-  const handleWorkoutFormChange = ({ currentTarget: input }) => {
+  // Handle changes in workout fields
+  const handleWorkoutFieldChange = ({ currentTarget: input }) => {
     setWorkoutData({ ...workoutData, [input.name]: input.value });
   };
 
-  const handleExerciseFormChange = (event, index) => {
+  // Handle changes in exercise fields
+  const handleExerciseFieldChange = (event, index) => {
     let exerciseFormData = [...exerciseData];
     exerciseFormData[index][event.target.name] = event.target.value;
     setExerciseData(exerciseFormData);
   };
 
+  // Delete fields of one exercise
   const deleteExerciseFields = (event, index) => {
     let exerciseFormData = [...exerciseData];
     exerciseFormData.splice(index, 1);
     setExerciseData(exerciseFormData);
   };
 
+  // Add fields for one exercise
   const addExerciseFields = (event) => {
     event.preventDefault();
     let exerciseObject = {
@@ -132,7 +136,7 @@ const UpdateWorkoutForm = () => {
             type="text"
             placeholder="Workout name"
             name="workoutName"
-            onChange={handleWorkoutFormChange}
+            onChange={handleWorkoutFieldChange}
             value={workoutData.workoutName}
             required
           />
@@ -143,7 +147,7 @@ const UpdateWorkoutForm = () => {
             type="text"
             placeholder="Workout type"
             name="workoutType"
-            onChange={handleWorkoutFormChange}
+            onChange={handleWorkoutFieldChange}
             value={workoutData.workoutType}
             required
           />
@@ -153,7 +157,7 @@ const UpdateWorkoutForm = () => {
             className="form-control form-outline w-25"
             type="date"
             name="workoutDate"
-            onChange={handleWorkoutFormChange}
+            onChange={handleWorkoutFieldChange}
             value={workoutData.workoutDate}
             required
           />
@@ -170,7 +174,7 @@ const UpdateWorkoutForm = () => {
                       placeholder="Exercise name"
                       name="exerciseName"
                       onChange={(event) =>
-                        handleExerciseFormChange(event, index)
+                        handleExerciseFieldChange(event, index)
                       }
                       value={exerciseField.exerciseName}
                     />
@@ -182,7 +186,7 @@ const UpdateWorkoutForm = () => {
                       placeholder="Exercise weight"
                       name="exerciseWeight"
                       onChange={(event) =>
-                        handleExerciseFormChange(event, index)
+                        handleExerciseFieldChange(event, index)
                       }
                       value={exerciseField.exerciseWeight}
                     />
@@ -194,7 +198,7 @@ const UpdateWorkoutForm = () => {
                       placeholder="Exercise sets"
                       name="exerciseSets"
                       onChange={(event) =>
-                        handleExerciseFormChange(event, index)
+                        handleExerciseFieldChange(event, index)
                       }
                       value={exerciseField.exerciseSets}
                     />
@@ -206,7 +210,7 @@ const UpdateWorkoutForm = () => {
                       placeholder="Exercise reps"
                       name="exerciseReps"
                       onChange={(event) =>
-                        handleExerciseFormChange(event, index)
+                        handleExerciseFieldChange(event, index)
                       }
                       value={exerciseField.exerciseReps}
                     />

@@ -57,10 +57,12 @@ const UpdateRecordForm = () => {
     getRecord();
   }, []);
 
+  // Handle change in fields
   const handleChange = ({ currentTarget: input }) => {
     setFormData({ ...formData, [input.name]: input.value });
   };
 
+  // Update the record
   const updateRecord = async (e) => {
     console.log(params.id);
     console.log(_id);
@@ -85,6 +87,7 @@ const UpdateRecordForm = () => {
       console.log(error);
     }
   };
+
   return (
     <div>
       <form onSubmit={updateRecord}>

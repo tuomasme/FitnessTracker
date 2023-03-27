@@ -53,6 +53,7 @@ const LoginForm = () => {
     setData({ ...data, [input.name]: input.value });
   };
 
+  // Login request
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -125,37 +126,6 @@ const LoginForm = () => {
             </td>
           </tr>
         </table>
-        {/* <div className="form-margin">
-          <input
-            className="form-control form-outline"
-            type="text"
-            placeholder="Username"
-            name="username"
-            onChange={handleChange}
-            value={data.username}
-            required
-          />
-        </div>
-        <div className="form-margin">
-          <input
-            className="form-control form-outline"
-            type="password"
-            placeholder="Password"
-            name="password"
-            onChange={handleChange}
-            value={data.password}
-            required
-          />
-        </div>
-        {error && <div className="form-margin error-color">{error}</div>}
-        <div className="form-margin">
-          <button
-            className="form-control form-outline btn btn-primary"
-            type="submit"
-          >
-            Login
-          </button>
-        </div> */}
       </form>
     </div>
   );

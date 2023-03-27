@@ -1,8 +1,12 @@
-(MERN stack) FitnessTracker app with registration and login functions where the user can
+MERN stack Fitness Tracker app with registration and login functions
 
-- fetch their dated workouts (including exercises, exercise weights, exercise reps) from the database
-- filter their workouts by name (autocomplete input)
-- filter their workouts by type (select element)
-- add, delete and update their workouts
-- fetch their records from the database
-- add, delete and update their records
+Authentication and authorization technique: JSON Web Token
+State management technique: Redux Toolkit
+
+Fitness Tracker user can
+
+- create workouts (including exercises, exercise weights, sets and reps)
+- view, edit and delete their workouts
+- filter workouts by their name and type
+- create records
+- view, edit and delete their records

@@ -83,25 +83,26 @@ const WorkoutsForm = () => {
     }
   };
 
+  // Prevent default when submitting
   const submitHandler = (event) => {
     event.preventDefault();
   };
 
-  // Set autocomplete search value on change
-  const onSearchValueChange = (event) => {
+  // Handle autocomplete input search value changes
+  const handleSearchValueChange = (event) => {
     setSearchValue(event.target.value);
   };
 
-  // Set autocomplete input search term
-  const onSearch = (searchTerm) => {
+  // Handle autocomplete input suggestion click
+  const handleSuggestionClick = (searchTerm) => {
     setSearchValue(searchTerm);
-    console.log(searchTerm);
   };
 
   // Set select input value
   const onSelectValueChange = (event) => {
     setSelectValue(event.target.value);
   };
+
   return (
     <div>
       <form onSubmit={submitHandler}>
@@ -112,7 +113,7 @@ const WorkoutsForm = () => {
             placeholder="Search by workout name"
             name="searchWorkoutName"
             value={searchValue}
-            onChange={onSearchValueChange}
+            onChange={handleSearchValueChange}
           />
         </div>
         <div className="center">
@@ -137,7 +138,7 @@ const WorkoutsForm = () => {
               .map((workout) => (
                 <div
                   className="dropdown-row"
-                  onClick={() => onSearch(workout.workoutName)}
+                  onClick={() => handleSuggestionClick(workout.workoutName)}
                   key={workout._id}
                 >
                   {workout.workoutName}
