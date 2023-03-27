@@ -1,6 +1,7 @@
 MERN stack Fitness Tracker app with registration and login functions
 
 Authentication and authorization technique: JSON Web Token
+
 State management technique: Redux Toolkit
 
 Fitness Tracker user can
