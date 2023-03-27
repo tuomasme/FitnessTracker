@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import Workout from "../models/Workout.js";
 
+// Fetch all workouts of the user
 export const getWorkouts = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -11,6 +12,7 @@ export const getWorkouts = async (req, res) => {
   }
 };
 
+// Fetch one workout of the user
 export const getWorkout = async (req, res) => {
   try {
     const workout = await Workout.findOne({ _id: req.params.id });
@@ -20,6 +22,7 @@ export const getWorkout = async (req, res) => {
   }
 };
 
+// Create a new workout
 export const addWorkout = async (req, res) => {
   try {
     const { userId, workoutName, workoutType, workoutDate, workoutExercises } =
@@ -40,6 +43,7 @@ export const addWorkout = async (req, res) => {
   }
 };
 
+// Delete the selected workout
 export const deleteWorkout = async (req, res) => {
   try {
     const deleteWorkout = await Workout.findByIdAndDelete(req.params.id);
@@ -49,17 +53,7 @@ export const deleteWorkout = async (req, res) => {
   }
 };
 
-/* export const editWorkout = async (req, res) => {
-  try {
-    const editWorkout = await Workout.findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    });
-    res.status(200).json("Workout updated");
-  } catch (error) {
-    res.json(404).json({ message: err.message });
-  }
-}; */
-
+// Update the selected workout
 export const editWorkout = async (req, res) => {
   try {
     const { id } = req.params;

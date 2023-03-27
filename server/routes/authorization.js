@@ -3,10 +3,10 @@ import { login, register } from "../controllers/authorization.js";
 
 const router = express.Router();
 
-// Registering
+// Route for registering
 router.post("/register", register);
 
-// Logging in
+// Route for logging in
 router.post("/login", login);
 
 export default router;

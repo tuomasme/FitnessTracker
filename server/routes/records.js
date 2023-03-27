@@ -10,19 +10,19 @@ import { verifyToken } from "../middleware/authorization.js";
 
 const router = express.Router();
 
-// Fetch all records of the user
+// Route for fetching all records of the user
 router.get("/:userId", verifyToken, getRecords);
 
-// Fetch one record of the user
+// Route for fetching one record of the user
 router.get("/:userid/:id", verifyToken, getRecord);
 
-// Add a record
+// Route for creating a new record
 router.post("/:userId/", verifyToken, addRecord);
 
-// Delete a record
+// Route for deleting the selected record
 router.delete("/:userId/:id", verifyToken, deleteRecord);
 
-// Edit a record
+// Route for updating the selected record
 router.patch("/:userId/:id", verifyToken, editRecord);
 
 export default router;

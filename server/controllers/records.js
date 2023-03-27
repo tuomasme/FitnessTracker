@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import Record from "../models/Record.js";
 
+// Fetch all records of the user
 export const getRecords = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -11,6 +12,7 @@ export const getRecords = async (req, res) => {
   }
 };
 
+// Fetch one record of the user
 export const getRecord = async (req, res) => {
   try {
     const record = await Record.findOne({ _id: req.params.id });
@@ -20,6 +22,7 @@ export const getRecord = async (req, res) => {
   }
 };
 
+// Create a new record
 export const addRecord = async (req, res) => {
   try {
     const { userId, recordName, recordWeight } = req.body;
@@ -37,6 +40,7 @@ export const addRecord = async (req, res) => {
   }
 };
 
+// Delete the selected record
 export const deleteRecord = async (req, res) => {
   try {
     const deleteRecord = await Record.findByIdAndDelete(req.params.id);
@@ -46,6 +50,7 @@ export const deleteRecord = async (req, res) => {
   }
 };
 
+// Update the selected record
 export const editRecord = async (req, res) => {
   try {
     const { id } = req.params;
