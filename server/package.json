@@ -15,8 +15,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
+   "engines": {
+    "node": "18.x"
+   },
   "scripts": {
-    "start": "nodemon index.js"
+  "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",

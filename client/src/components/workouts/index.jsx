@@ -195,7 +195,7 @@ const WorkoutsForm = () => {
                         {moment(workout.workoutDate).format("DD.MM.YYYY")}
                       </td>
                       <td>{workout.workoutName}</td>
-                      <td colspan="3">{workout.workoutType}</td>
+                      <td colSpan="3">{workout.workoutType}</td>
                       <td>
                         <Link to={"/updateworkout/" + workout._id}>
                           <button
